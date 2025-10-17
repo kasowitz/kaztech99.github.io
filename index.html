@@ -38,13 +38,6 @@
     /* Logo */
     .logo{display:flex; align-items:center; gap:14px; text-decoration:none}
     .logo svg{width:44px; height:44px; filter:drop-shadow(var(--glow))}
-    .logo-img {
-  width: 48px;         /* adjust for your logo size */
-  height: auto;        /* keeps proportions */
-  border-radius: 10px; /* optional: soft corners */
-  object-fit: contain; /* ensures it scales properly */
-  filter: drop-shadow(0 0 10px rgba(0,179,255,0.4)); /* subtle glow to match theme */
-}
     .brand{font-weight:800; letter-spacing:.3px}
     .brand span{display:block; line-height:1}
    /* .brand .name{font-size:1.25rem} */
@@ -90,13 +83,16 @@
     <header>
       <a class="logo" href="#" aria-label="KazTech home">
         <!-- Stylized KT icon -->
-        <a class="logo" href="#" aria-label="KazTech home">
-  <img src="KT1.png" alt="KazTech logo" class="logo-img">
-  <div class="brand">
-    <span class="name">KazTech</span>
-    <span class="tag">Tech That Just Works.</span>
-  </div>
-</a>
+        <svg viewBox="0 0 64 64" aria-hidden="true" role="img">
+          <defs>
+            <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0%" stop-color="#00b3ff"/>
+              <stop offset="100%" stop-color="#6ee7ff"/>
+            </linearGradient>
+          </defs>
+          <rect x="6" y="6" width="52" height="52" rx="14" fill="none" stroke="url(#g)" stroke-width="3"/>
+          <path d="M18 43V21l9 10-9 12zm15.5-22H42m-8.5 10H42m-8.5 12H42" stroke="url(#g)" stroke-width="3" stroke-linecap="round" fill="none"/>
+        </svg>
         <div class="brand">
           <span class="name">KazTech</span>
           <span class="tag">Practical IT for real people</span>
@@ -196,8 +192,3 @@
   <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "e01c86ecf4834c96ad9875aa290d9fb2"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
-
-
-
-
-
