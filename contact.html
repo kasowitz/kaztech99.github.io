@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact KazTech</title>
+  <meta name="description" content="Contact KazTech for fast, friendly small‑business IT help: PCs, email, backups, networking, and more." />
+  <link rel="icon" type="image/png" href="KT1.png" />
+  <style>
+    :root{
+      --bg:#06070a; --panel:#0b0f16; --accent:#00b3ff; --accent-2:#6ee7ff; --text:#e6f1ff; --muted:#93a4be;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial; background:radial-gradient(1200px 800px at 80% -10%, rgba(14,165,255,.12), transparent 60%), radial-gradient(1000px 600px at -10% 120%, rgba(0,179,255,.14), transparent 60%), var(--bg); color:var(--text)}
+    .wrap{max-width:900px; margin:0 auto; padding:28px}
+    a{color:var(--accent)}
+    header{display:flex; align-items:center; justify-content:space-between; gap:16px; margin:8px 0 26px}
+    .logo{display:flex; align-items:center; gap:14px; text-decoration:none}
+    .logo img{width:40px; height:40px; border-radius:10px}
+    .title{font-weight:800; font-size:1.4rem}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.00)); border:1px solid rgba(255,255,255,.08); border-radius:18px; padding:20px}
+    h1{font-size:clamp(1.6rem, 2.6vw + 1rem, 2.6rem); margin:.2em 0 .4em}
+    p{color:var(--muted)}
+
+    form{margin-top:16px; display:grid; gap:14px}
+    label{font-weight:600; font-size:.95rem}
+    input, textarea{width:100%; padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,.12); background:#0d121a; color:var(--text)}
+    input::placeholder, textarea::placeholder{color:#8aa0bc}
+    textarea{min-height:140px; resize:vertical}
+
+    .row{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+    @media (max-width:800px){.row{grid-template-columns:1fr}}
+
+    .btn{cursor:pointer; border:none; border-radius:12px; padding:14px 18px; font-weight:800; letter-spacing:.2px; background:linear-gradient(135deg, var(--accent), #3ecbff); color:#001018}
+    .btn:disabled{opacity:.6; cursor:not-allowed}
+
+    .note{font-size:.9rem; color:var(--muted)}
+    .alert{margin-top:12px; padding:12px 14px; border-radius:12px; display:none}
+    .ok{background:rgba(34,197,94,.12); border:1px solid rgba(34,197,94,.35); color:#b9f6c1}
+    .err{background:rgba(244,63,94,.12); border:1px solid rgba(244,63,94,.35); color:#ffd1da}
+
+    footer{margin:26px 0 6px; color:var(--muted); font-size:.9rem}
+    .back{display:inline-flex; align-items:center; gap:8px}
+    .hp{display:none} /* Honeypot */
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="logo" href="/">
+        <img src="KT1.png" alt="KazTech logo" />
+        <span class="title">KazTech</span>
+      </a>
+      <a class="back" href="/">← Back to Home</a>
+    </header>
+
+    <div class="card">
+      <h1>Contact KazTech</h1>
+      <p>Tell me what’s going on and how to reach you. I usually reply the same day.</p>
+
+      <!-- Replace YOUR_FORM_ID with your Formspree ID (like xzbwqxyz) -->
+      <form id="contact" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate>
+        <div class="row">
+          <div>
+            <label for="name">Name*</label>
+            <input id="name" name="name" type="text" placeholder="Jane Doe" required />
+          </div>
+          <div>
+            <label for="email">Email*</label>
+            <input id="email" name="email" type="email" placeholder="you@example.com" required />
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label for="phone">Phone (optional)</label>
+            <input id="phone" name="phone" type="tel" placeholder="(555) 123‑4567" />
+          </div>
+          <div>
+            <label for="subject">Subject</label>
+            <input id="subject" name="subject" type="text" placeholder="PC won’t boot / Email deliverability / …" />
+          </div>
+        </div>
+        <div>
+          <label for="message">Message*</label>
+          <textarea id="message" name="message" placeholder="A quick description helps me prep before I reply." required></textarea>
+        </div>
+
+        <!-- Honeypot field for spam bots -->
+        <input class="hp" type="text" name="company" tabindex="-1" autocomplete="off" />
+
+        <!-- Where to send replies from (helps Formspree reply-to) -->
+        <input type="hidden" name="_replyto" value="{{email}}" />
+        <input type="hidden" name="_subject" value="New message from kaztech99.com" />
+
+        <button class="btn" type="submit">Send message</button>
+        <div id="ok" class="alert ok" role="status">Thanks! Your message has been sent.</div>
+        <div id="err" class="alert err" role="alert">Hmm, something went wrong. Please email <a href="mailto:joe@kaztech99.com">joe@kaztech99.com</a>.</div>
+        <p class="note">By submitting, you agree to be contacted about your request. No newsletters, no spam.</p>
+      </form>
+    </div>
+
+    <footer>
+      © <span id="y"></span> KazTech — Cleveland, OH
+    </footer>
+  </div>
+
+  <script>
+    // Year stamp
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // Handle AJAX submit so the user stays on-page
+    const form = document.getElementById('contact');
+    const ok = document.getElementById('ok');
+    const err = document.getElementById('err');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      ok.style.display = 'none';
+      err.style.display = 'none';
+      const btn = form.querySelector('button[type="submit"]');
+      btn.disabled = true; btn.textContent = 'Sending…';
+
+      try{
+        const data = new FormData(form);
+        // Basic honeypot check
+        if(data.get('company')){ throw new Error('Bot detected'); }
+        const res = await fetch(form.action, { method: 'POST', body: data, headers: { 'Accept': 'application/json' } });
+        if(res.ok){
+          ok.style.display = 'block';
+          form.reset();
+        }else{
+          const out = await res.json().catch(()=>({}));
+          console.error('Form error', out);
+          err.style.display = 'block';
+        }
+      }catch(ex){
+        console.error(ex);
+        err.style.display = 'block';
+      }finally{
+        btn.disabled = false; btn.textContent = 'Send message';
+      }
+    });
+  </script>
+</body>
+</html>
