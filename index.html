@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KazTech — IT Solutions</title>
+  <meta name="description" content="KazTech offers friendly, reliable IT support for small businesses: PCs, backups, networking, email, Microsoft 365, QuickBooks, and more." />
+  <meta property="og:title" content="KazTech — IT Solutions" />
+  <meta property="og:description" content="Fast, friendly IT support. Email joe@kaztech99.com" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://kaztech99.com" />
+  <meta name="theme-color" content="#0ea5ff" />
+  <style>
+    :root{
+      --bg:#06070a;          /* near‑black */
+      --panel:#0b0f16;       /* dark panel */
+      --accent:#00b3ff;      /* neon blue */
+      --accent-2:#6ee7ff;    /* soft cyan */
+      --text:#e6f1ff;        /* soft white */
+      --muted:#93a4be;       /* slate */
+      --glow:0 0 32px rgba(0,179,255,.35),0 0 64px rgba(0,179,255,.22);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1200px 800px at 80% -10%, rgba(14,165,255,.12), transparent 60%),
+                  radial-gradient(1000px 600px at -10% 120%, rgba(0,179,255,.14), transparent 60%),
+                  var(--bg);
+      color:var(--text);
+      line-height:1.5;
+    }
+    .wrap{max-width:1100px; margin:0 auto; padding:24px}
+    header{display:flex; align-items:center; justify-content:space-between; gap:16px; padding:12px 0}
+    a{color:var(--accent)}
+
+    /* Logo */
+    .logo{display:flex; align-items:center; gap:14px; text-decoration:none}
+    .logo svg{width:44px; height:44px; filter:drop-shadow(var(--glow))}
+    .brand{font-weight:800; letter-spacing:.3px}
+    .brand span{display:block; line-height:1}
+    .brand .name{font-size:1.25rem}
+    .brand .tag{font-size:.78rem; color:var(--muted)}
+
+    /* Hero */
+    .hero{display:grid; grid-template-columns:1.1fr .9fr; gap:32px; align-items:center; padding:56px 0}
+    @media (max-width:900px){.hero{grid-template-columns:1fr; padding:36px 0}}
+    .hero h1{font-size:clamp(1.8rem, 3.2vw + 1rem, 3.2rem); line-height:1.1; margin:.1em 0 .4em}
+    .hero p{color:var(--muted); font-size:1.05rem}
+    .pill{display:inline-flex; align-items:center; gap:10px; padding:10px 14px; margin:10px 0 22px; border:1px solid rgba(110,231,255,.18); border-radius:999px; background:linear-gradient( to right, rgba(0,179,255,.08), rgba(14,165,255,.04)); box-shadow:var(--glow)}
+    .cta{display:flex; gap:12px; flex-wrap:wrap}
+    .btn{cursor:pointer; border:none; border-radius:14px; padding:14px 18px; font-weight:700; letter-spacing:.2px}
+    .btn-primary{background:linear-gradient(135deg, var(--accent), #3ecbff); color:#001018; box-shadow:0 8px 24px rgba(0,179,255,.25)}
+    .btn-ghost{background:transparent; color:var(--text); border:1px solid rgba(255,255,255,.12)}
+
+    /* Card grid */
+    .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin:28px 0}
+    @media (max-width:900px){.grid{grid-template-columns:1fr}}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.00)); border:1px solid rgba(255,255,255,.08); border-radius:18px; padding:18px; backdrop-filter: blur(6px)}
+    .card h3{margin:.2em 0 .3em; font-size:1.05rem}
+    .card p{color:var(--muted); margin:.2em 0 0}
+
+    /* Contact section */
+    .contact{margin:48px 0; background:var(--panel); border:1px solid rgba(255,255,255,.08); border-radius:20px; padding:22px}
+    .contact-inner{display:flex; flex-wrap:wrap; gap:16px; align-items:center; justify-content:space-between}
+    .contact b{color:var(--accent)}
+    .copy{display:inline-flex; align-items:center; gap:8px; border:1px dashed rgba(110,231,255,.35); padding:8px 10px; border-radius:10px; cursor:pointer}
+    .copy:hover{background:rgba(0,179,255,.06)}
+
+    footer{padding:26px 0; color:var(--muted); font-size:.9rem}
+    .dot{height:6px;width:6px;display:inline-block; border-radius:999px; background:var(--accent); box-shadow:var(--glow); margin:0 8px}
+
+    /* Subtle KT mark behind hero */
+    .mark{position:relative}
+    .mark::after{content:"KT"; position:absolute; inset:auto 0 -18px auto; font-weight:900; font-size:120px; opacity:.04; letter-spacing:6px; pointer-events:none}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="logo" href="#" aria-label="KazTech home">
+        <!-- Stylized KT icon -->
+        <svg viewBox="0 0 64 64" aria-hidden="true" role="img">
+          <defs>
+            <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0%" stop-color="#00b3ff"/>
+              <stop offset="100%" stop-color="#6ee7ff"/>
+            </linearGradient>
+          </defs>
+          <rect x="6" y="6" width="52" height="52" rx="14" fill="none" stroke="url(#g)" stroke-width="3"/>
+          <path d="M18 43V21l9 10-9 12zm15.5-22H42m-8.5 10H42m-8.5 12H42" stroke="url(#g)" stroke-width="3" stroke-linecap="round" fill="none"/>
+        </svg>
+        <div class="brand">
+          <span class="name">KazTech</span>
+          <span class="tag">Practical IT for real people</span>
+        </div>
+      </a>
+    </header>
+
+    <section class="hero mark">
+      <div>
+        <div class="pill">Fast response <span class="dot"></span> Remote & onsite <span class="dot"></span> Small‑biz friendly</div>
+        <h1>Fix what’s broken. Secure what matters. <br/>Keep your <em>tech</em> out of your way.</h1>
+        <p>
+          I help small businesses around Cleveland keep PCs, email, and networks running smoothly.
+          Backups that actually restore, QuickBooks that opens when you need it, and security that
+          doesn’t annoy your users.
+        </p>
+        <div class="cta">
+          <a class="btn btn-primary" href="mailto:joe@kaztech99.com?subject=KazTech%20help" aria-label="Email Joe at KazTech">Email Joe</a>
+          <a class="btn btn-ghost" href="#services">See services</a>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="padding:22px">
+          <h3 style="margin-top:0">Quick hits I handle</h3>
+          <ul style="margin:.2em 0 0; padding-left:18px; color:var(--muted)">
+            <li>PC refresh & Windows 10→11 upgrades</li>
+            <li>Microsoft 365 & custom‑domain email</li>
+            <li>QuickBooks installs, printing & PDF fixes</li>
+            <li>Veeam backups & file restores</li>
+            <li>SPF/DKIM/DMARC email deliverability</li>
+            <li>Routers, Wi‑Fi, VPN, remote access</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="grid">
+        <div class="card">
+          <h3>Workstations & Laptops</h3>
+          <p>Clean installs, migrations from old drives, SSD upgrades, driver/firmware updates, and Windows tuning so things stop freezing.</p>
+        </div>
+        <div class="card">
+          <h3>Email & M365</h3>
+          <p>Custom domains that don’t hit spam: Zoho/365 setup, SPF/DKIM/DMARC, Outlook profile repair, shared mailboxes, aliases.</p>
+        </div>
+        <div class="card">
+          <h3>Backups that Restore</h3>
+          <p>Veeam Agent and NAS targets, recovery media, and test restores so you know it works before you need it.</p>
+        </div>
+        <div class="card">
+          <h3>Accounting Apps</h3>
+          <p>QuickBooks installs, admin/run‑as quirks, PDF/printer fixing, and data moves that don’t lose your files.</p>
+        </div>
+        <div class="card">
+          <h3>Networking</h3>
+          <p>Routers, Wi‑Fi tuning, VLANs, OpenVPN, DNS. Remote support that’s secure and painless for end‑users.</p>
+        </div>
+        <div class="card">
+          <h3>Ad‑hoc Support</h3>
+          <p>No contracts required. Clear estimates, straight talk, and options that respect your time and budget.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact">
+      <div class="contact-inner">
+        <div>
+          <h3 style="margin:.2em 0 .2em">Let’s fix your thing.</h3>
+          <div style="color:var(--muted)">Email <b>joe@kaztech99.com</b> and tell me what’s going on.</div>
+        </div>
+        <div>
+          <button id="copy" class="copy" aria-label="Copy email address">📋 <span>Copy email</span></button>
+          <a class="btn btn-primary" href="mailto:joe@kaztech99.com?subject=KazTech%20help">Start an email</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      © <span id="y"></span> KazTech. Built with a healthy fear of data loss.
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+    document.getElementById('copy').addEventListener('click', async () => {
+      try{
+        await navigator.clipboard.writeText('joe@kaztech99.com');
+        const btn=document.getElementById('copy');
+        const span=btn.querySelector('span');
+        const old=span.textContent; span.textContent='Copied!';
+        btn.style.borderColor='rgba(0,179,255,.75)';
+        setTimeout(()=>{span.textContent=old; btn.style.borderColor='rgba(110,231,255,.35)';},1200);
+      }catch(e){ alert('Email: joe@kaztech99.com'); }
+    });
+  </script>
+</body>
+</html>
