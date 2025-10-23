@@ -51,7 +51,8 @@
     @media (max-width:900px){.hero{grid-template-columns:1fr; padding:36px 0}}
     .hero h1{font-size:clamp(1.8rem, 3.2vw + 1rem, 3.2rem); line-height:1.1; margin:.1em 0 .4em}
     .hero p{color:var(--muted); font-size:1.05rem}
-    .pill{display:inline-flex; align-items:center; gap:10px; padding:10px 14px; margin:10px 0 22px; border:1px solid rgba(110,231,255,.18); border-radius:999px; background:linear-gradient( to right, rgba(0,179,255,.08), rgba(14,165,255,.04)); box-shadow:var(--glow)}
+    .pill{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:12px;padding:10px 14px;margin:10px auto 22px;border:1px solid rgba(110,231,255,.18);border-radius:999px;background:linear-gradient(to right,rgba(0,179,255,.08),rgba(14,165,255,.04));box-shadow:var(--glow);} .pill .dot{margin:0 2px;}
+.pill .pill-item{ white-space:nowrap; }
     .cta{display:flex; gap:12px; flex-wrap:wrap}
     .btn{cursor:pointer; border:none; border-radius:14px; padding:14px 18px; font-weight:700; letter-spacing:.2px}
     .btn-primary{background:linear-gradient(135deg, var(--accent), #3ecbff); color:#001018; box-shadow:0 8px 24px rgba(0,179,255,.25)}
@@ -128,7 +129,7 @@
 
     <section class="hero mark">
       <div>
-        <div class="pill">Fast response <span class="dot"></span> Remote & onsite <span class="dot"></span> Small‑biz friendly</div>
+        <div class="pill">  <span class="pill-item">Fast response</span><span class="dot"></span>  <span class="pill-item">Remote & onsite</span><span class="dot"></span>  <span class="pill-item">Small-biz friendly</span> </div>
         <h1>Fix what’s broken. Secure what matters. <br/>Keep your <em>tech</em> out of your way.</h1>
         <p>
           For over 25 years I've helped individuals and small businesses around Cleveland keep PCs, email, and networks running smoothly.
@@ -219,26 +220,3 @@
   <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "e01c86ecf4834c96ad9875aa290d9fb2"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
