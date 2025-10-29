@@ -1,9 +1,11 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>KazTech — Pricing & Contracts</title>
+  <title>Contact KazTech</title>
+  <meta name="description" content="Contact KazTech for fast, friendly small‑business IT help: PCs, email, backups, networking, and more." />
+  <link rel="icon" type="image/png" href="KT1.png" />
   <style>
     :root{
       --bg:#0b1220;          /* page background */
@@ -21,22 +23,26 @@
     }
     *{box-sizing:border-box}
     html,body{height:100%}
+    body{margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial; background:radial-gradient(1200px 800px at 80% -10%, rgba(14,165,255,.12), transparent 60%), radial-gradient(1000px 600px at -10% 120%, rgba(0,179,255,.14), transparent 60%), var(--bg); color:var(--text)}
+    .wrap{max-width:900px; margin:0 auto; padding:28px}
+    a{color:var(--accent)}
+    header{display:flex; align-items:center; justify-content:space-between; gap:16px; margin:8px 0 26px}
+    .logo{display:flex; align-items:center; gap:14px; text-decoration:none}
+    .logo img{width:40px; height:40px; border-radius:10px}
+    .title{font-weight:800; font-size:1.4rem}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.00)); border:1px solid rgba(255,255,255,.08); border-radius:18px; padding:20px}
+    h1{font-size:clamp(1.6rem, 2.6vw + 1rem, 2.6rem); margin:.2em 0 .4em}
+    p{color:var(--muted)}
+    *{box-sizing:border-box}
+    html,body{height:100%}
     body{margin:0;background:radial-gradient(1200px 800px at 80% -10%, rgba(14,165,255,.15), transparent 60%),
            radial-gradient(900px 600px at 10% 110%, rgba(56,189,248,.12), transparent 50%), var(--bg); color:var(--ink); font: 16px/1.6 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, "Apple Color Emoji","Segoe UI Emoji";}
     a{color:var(--brand); text-decoration:none}
     a:hover{color:var(--brand-2)}
     .wrap{max-width:1100px; margin:0 auto; padding:28px 18px 80px}
 
-    /* Header */
-    header{position:sticky; top:0; z-index:30; backdrop-filter: blur(8px); background:linear-gradient(to bottom, rgba(11,18,32,.85), rgba(11,18,32,.55)); border-bottom:1px solid var(--line)}
-    .bar{display:flex; align-items:center; justify-content:space-between; gap:18px; padding:16px 0}
-    .brand{display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.2px}
-    .logo{width:34px; height:34px; border-radius:10px; background:radial-gradient(120% 120% at 30% 20%, var(--brand), transparent 60%), #071022; box-shadow: inset 0 0 0 1px rgba(255,255,255,.06), 0 8px 20px rgba(14,165,233,.25)}
-    nav{display:flex; gap:8px; flex-wrap:wrap}
-    .pill{display:inline-flex; align-items:center; gap:10px; padding:10px 14px; background:linear-gradient(to right, rgba(0,179,255,.08), rgba(14,165,233,.12)); border:1px solid var(--line); border-radius:999px;}
-    .pill[aria-current="page"]{outline:2px solid var(--ring);}
 
-    /* Hero */
+     /* Hero */
     .hero{margin:36px 0 22px}
     h1{font-size:clamp(28px, 4vw, 40px); line-height:1.15; margin:0 0 10px}
     .sub{color:var(--muted); max-width:70ch}
@@ -60,24 +66,32 @@
     .btn{display:inline-flex; align-items:center; justify-content:center; padding:10px 14px; border-radius:12px; background:var(--brand); color:#031123; font-weight:800; border:none}
     .btn.alt{background:transparent; color:var(--brand-2); border:1px solid var(--line)}
 
-    /* Footer */
-    footer{margin-top:40px; padding-top:16px; border-top:1px dashed var(--line); color:var(--muted); font-size:14px}
+    .row{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+    @media (max-width:800px){.row{grid-template-columns:1fr}}
+
+   
+
+    .note{font-size:.9rem; color:var(--muted)}
+    .alert{margin-top:12px; padding:12px 14px; border-radius:12px; display:none}
+    .ok{background:rgba(34,197,94,.12); border:1px solid rgba(34,197,94,.35); color:#b9f6c1}
+    .err{background:rgba(244,63,94,.12); border:1px solid rgba(244,63,94,.35); color:#ffd1da}
+
+    footer{margin:26px 0 6px; color:var(--muted); font-size:.9rem}
+    .back{display:inline-flex; align-items:center; gap:8px}
+    .hp{display:none} /* Honeypot */
   </style>
 </head>
 <body>
-  <header>
-    <div class="wrap bar">
-      <div class="brand"><div class="logo" aria-hidden="true"></div><span>KazTech LLC</span></div>
-      <nav>
-        <a class="pill" href="/">Home</a>
-        <a class="pill" href="/about.html">About</a>
-        <a class="pill" href="/contact.html">Contact</a>
-        <a class="pill" aria-current="page" href="#">Pricing / Contracts</a>
-      </nav>
-    </div>
-  </header>
+  <div class="wrap">
+    <header>
+      <a class="logo" href="/">
+        <img src="KT1.png" alt="KazTech logo" />
+        <span class="title">KazTech</span>
+      </a>
+      <a class="back" href="/">← Back to Home</a>
+    </header>
 
-  <main class="wrap">
+   <main class="wrap">
     <section class="hero">
       <h1>Simple, fair pricing — built for small businesses</h1>
       <p class="sub">Choose ad‑hoc support when you just need a quick hand, or lock in 24/7 phone & remote help with a monthly plan. Onsite is always available at a clear, discounted rate.</p>
@@ -168,3 +182,4 @@
   </main>
 </body>
 </html>
+
