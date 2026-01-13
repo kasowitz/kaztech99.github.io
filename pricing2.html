@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KazTech Pricing &amp; Contracts</title>
+  <meta name="description" content="KazTech Pricing &amp; Contracts" />
+  <link rel="icon" type="image/png" href="KT1.png" />
+  <style>
+:root{
+  --bg:#0b1220;          /* page background */
+  --panel:#0f172a;       /* cards/nav background */
+  --ink:#e5f1ff;         /* primary text */
+  --muted:#a7b5cc;       /* secondary text */
+  --brand:#0ea5ff;       /* accent (KazTech blue) */
+  --brand-2:#38bdf8;     /* lighter accent */
+  --line:rgba(110,231,255,.18);
+  --ring:rgba(14,165,233,.35);
+  --shadow: 0 10px 30px rgba(2, 132, 199, .25);
+  --radius:22px;
+  --radius-sm:14px;
+  --radius-lg:28px;
+}
+
+*{box-sizing:border-box}
+html{min-height:100%;
+  background:
+    radial-gradient(1200px 800px at 80% -10%, rgba(14,165,255,.15), transparent 60%),
+    radial-gradient(900px 600px at 10% 110%, rgba(56,189,248,.12), transparent 50%),
+    var(--bg);
+  background-attachment: fixed;
+}
+body{
+  margin:0;
+  min-height:100%;
+  background:transparent;
+  color:var(--ink);
+  font:16px/1.6 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, "Apple Color Emoji","Segoe UI Emoji";
+}
+
+a{color:var(--brand); text-decoration:none}
+a:hover{color:var(--brand-2)}
+
+.wrap{max-width:1100px; margin:0 auto; padding:28px 18px 80px}
+
+header{display:flex; align-items:center; justify-content:space-between; gap:16px; margin:8px 0 26px}
+.logo{display:flex; align-items:center; gap:14px; text-decoration:none}
+.logo img{width:40px; height:40px; border-radius:10px}
+.title{font-weight:800; font-size:2.5rem}
+
+/* Hero */
+.hero{margin:36px 0 22px}
+h1{font-size:clamp(28px, 4vw, 40px); line-height:1.15; margin:0 0 10px}
+.sub{color:var(--muted); max-width:70ch}
+
+/* Pricing grid */
+.grid{display:grid; gap:18px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin:26px 0 10px}
+.card{
+  background:linear-gradient(180deg, rgba(2,6,23,.7), rgba(2,6,23,.92));
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:22px 20px;
+  box-shadow:var(--shadow)
+}
+.badge{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border:1px solid var(--line); border-radius:999px; color:var(--brand); font-weight:600; background:rgba(14,165,233,.08)}
+.price{font-size:32px; font-weight:800; letter-spacing:.2px; margin:8px 0}
+.unit{font-size:14px; color:var(--muted); font-weight:500}
+
+ul{list-style:none; padding:0; margin:12px 0 0}
+li{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  margin:8px 0;
+  color:#d9e7ff;
+  line-height:1.5;
+}
+.dot{
+  flex-shrink:0;
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--brand-2);
+  margin-top:8px;
+  box-shadow:0 0 10px rgba(56,189,248,.6);
+}
+
+/* Footnotes / details */
+details{border:1px solid var(--line); border-radius:var(--radius-sm); padding:14px 16px; background:rgba(8,13,26,.55)}
+summary{cursor:pointer; font-weight:700; color:var(--brand-2)}
+
+/* CTA */
+.cta{display:flex; gap:12px; flex-wrap:wrap; margin-top:16px}
+.btn{display:inline-flex; align-items:center; justify-content:center; padding:10px 14px; border-radius:12px; background:var(--brand); color:#031123; font-weight:800; border:none}
+.btn.alt{background:transparent; color:var(--brand-2); border:1px solid var(--line)}
+
+.row{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+@media (max-width:800px){.row{grid-template-columns:1fr}}
+
+.note{font-size:.9rem; color:var(--muted)}
+.alert{margin-top:12px; padding:12px 14px; border-radius:12px; display:none}
+.ok{background:rgba(34,197,94,.12); border:1px solid rgba(34,197,94,.35); color:#b9f6c1}
+.err{background:rgba(244,63,94,.12); border:1px solid rgba(244,63,94,.35); color:#ffd1da}
+
+footer{margin:26px 0 6px; color:var(--muted); font-size:.9rem}
+.back{display:inline-flex; align-items:center; gap:8px}
+.hp{display:none} /* Honeypot */
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="logo" href="/">
+        <img src="KT1.png" alt="KazTech logo" />
+        <span class="title">KazTech</span>
+      </a>
+      <a class="back" href="/">← Back to Home</a>
+    </header>
+
+   <main>
+    <section class="hero">
+      <h1>Simple, fair pricing — built for small businesses</h1>
+      <p class="sub">Choose ad‑hoc support when you just need a quick hand, or lock in 24/7 phone & remote help with a monthly plan. Onsite is always available at a clear, discounted rate.</p>
+    </section>
+
+    <!-- Ad‑Hoc -->
+    <section class="card">
+      <span class="badge">Ad‑Hoc Support (no contract)</span>
+      <div class="price">$95<span class="unit">/hour • 15‑min minimum • 15‑min billing increments</span></div>
+      <ul>
+        <li><span class="dot"></span><span>Phone, email, remote assistance and onsite support when you need it.</span></li>
+        <li><span class="dot"></span><span>After‑hours & weekends billed at <strong>1.5×</strong> the standard rate.</span></li>
+        <li><span class="dot"></span><span>Onsite visits have a one-hour minimum.</span></li>
+        <li><span class="dot"></span><span>Onsite travel includes the first 15 miles round-trip; additional distance is billed at <strong>$1.25/mile</strong>.</span></li>
+        <li><span class="dot"></span><span>Projects, migrations, and extended onsite quoted separately.</span></li>
+        <li><span class="dot"></span><span>Priority is always given to contract clients.</span></li>
+      </ul>
+      <div class="cta">
+        <a class="btn" href="mailto:joe@kaztech99.com?subject=Ad‑Hoc%20Support%20Request">Request Ad‑Hoc Help</a>
+        <a class="btn alt" href="#plans">Compare monthly plans</a>
+      </div>
+    </section>
+
+    <!-- Plans -->
+    <h2 id="plans" style="margin:30px 6px 0">Monthly Support Plan Contracts</h2> 
+    <p style="margin:0 6px 10px; font-size:0.9rem; color:#a7b5cc; font-style:italic;">   All plans are billed monthly with a 12-month agreement term. Cancel anytime with 30-days’ notice. </p>
+    <div class="grid">
+      <!-- Plan 1 -->
+      <article class="card">
+        <span class="badge">Plan 1 — Remote‑First</span>
+        <div class="price">$75<span class="unit"> / device / month</span></div>
+        <ul>
+          <li><span class="dot"></span><span>24/7 phone & remote support. (After‑hours response may be slower for non‑urgent issues.)</span></li>
+          <li><span class="dot"></span><span>Priority scheduling ahead of non‑contract clients.</span></li>
+          <li><span class="dot"></span><span>Onsite available at discounted <strong>$65/hr</strong> (1‑hr minimum).</span></li>
+          <li><span class="dot"></span><span>After‑hours onsite billed at <strong>1.5×</strong>.</span></li>
+          <li><span class="dot"></span><span>35‑mile service radius included; beyond that <strong>$1/mile</strong> round‑trip.</span></li>
+          <li><span class="dot"></span><span>Response targets: Critical 1 hr • High 4 hrs • Normal same day • Low next business day.</span></li>
+        </ul>
+        <div class="cta">
+          <a class="btn" href="mailto:joe@kaztech99.com?subject=Sign%20up%20for%20Remote‑First">Get Remote‑First</a>
+         <!-- <a class="btn alt" href="#hybrid-notes">Read plan details</a> -->
+        </div>
+      </article>
+
+      <!-- Plan 2 -->
+      <article class="card">
+        <span class="badge">Plan 2 — Managed Services</span>
+<div class="price">$125<span class="unit"> / managed device / month</span></div>
+<ul>
+  <li><span class="dot"></span><span>Everything in Remote-First, plus proactive system oversight.</span></li>
+  <li><span class="dot"></span><span>Ongoing monitoring, maintenance, and check-ins to help prevent issues before they disrupt work.</span></li>
+  <li><span class="dot"></span><span><strong>1 hour</strong> of onsite service credit included each month, with rollover up to <strong>3 hours.</strong><em> (Equivalent to <strong>$65/hr</strong> of onsite labor; additional onsite billed at standard rates.)</em></span></li>  
+  <li><span class="dot"></span><span>Additional onsite billed at <strong>$65/hr</strong>; after-hours onsite at <strong>1.5×</strong>.</span></li>
+  <li><span class="dot"></span><span>Highest scheduling priority for onsite and time-sensitive work.</span></li>
+</ul>
+        <div class="cta">
+          <a class="btn" href="/managedplan.html">More Info</a>
+          <a class="btn alt" href="#hybrid-notes">How the credit works</a>
+        </div>
+      </article>
+    </div>
+
+    <!-- Credit notes -->
+    <section id="hybrid-notes" style="margin-top:14px" class="card">
+      <details open>
+        <summary>Onsite Service Time Details (Managed Services)</summary>
+        <ul>
+          <li><span class="dot"></span><span><strong>Monthly credit:</strong> 1 Hour ($65) onsite service credit added each billing cycle while enrolled in Managed Services Plan. Applied to onsite labor only.</span></li>
+          <li><span class="dot"></span><span><strong>Rollover:</strong> Unused credits roll for up to 3 consecutive months; the oldest credit expires as a new month is added. <em>Maximum balance 3 Hours ($195).</em></span></li>
+          <li><span class="dot"></span><span><strong>Limits:</strong> Not redeemable for cash, non‑transferable, and not applicable to projects, parts, or third‑party fees.</span></li>
+          <li><span class="dot"></span><span><strong>Travel:</strong> First 35 miles included per visit; beyond that billed at $1/mile.</span></li>
+        </ul>
+      </details>
+    </section>
+
+    <!-- FAQ -->
+    <section class="grid" style="margin-top:20px">
+      <article class="card">
+        <span class="badge">What’s included vs projects?</span>
+        <p style="margin-top:10px; color:#d9e7ff">Plans cover day‑to‑day troubleshooting, configuration, updates, and user support. Projects (new device rollouts, migrations, major redesigns, data recovery, cabling, etc.) are quoted separately at project rates.</p>
+      </article>
+      <article class="card">
+        <span class="badge">Response Commitment</span>
+        <p style="margin-top:10px; color:#d9e7ff">When you reach out, you’ll always hear back quickly.<BR>Critical: within 1 hr • High: within 4 hrs • Normal: same business day • Low: next business day.</p>
+      </article>
+    </section>
+
+    <footer>
+      <div>KazTech — North Royalton, OH</div>
+    </footer>
+  </main>
+  </div>
+</body>
+</html>
