@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KazTech — Managed Services</title>
+  <meta name="description" content="KazTech Managed Services plan details, what’s included, and what to expect." />
+  <link rel="icon" type="image/png" href="KT1.png" />
+  <style>
+    :root{
+      --bg:#0b1220;
+      --panel:#0f172a;
+      --ink:#e5f1ff;
+      --muted:#a7b5cc;
+      --brand:#0ea5ff;
+      --brand-2:#38bdf8;
+      --line:rgba(110,231,255,.18);
+      --ring:rgba(14,165,233,.35);
+      --shadow: 0 10px 30px rgba(2, 132, 199, .25);
+      --radius:22px;
+      --radius-sm:14px;
+      --radius-lg:28px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:
+        radial-gradient(1200px 800px at 80% -10%, rgba(14,165,255,.15), transparent 60%),
+        radial-gradient(900px 600px at 10% 110%, rgba(56,189,248,.12), transparent 50%),
+        var(--bg);
+      color:var(--ink);
+      font: 16px/1.6 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    a{color:var(--brand); text-decoration:none}
+    a:hover{color:var(--brand-2)}
+    .wrap{max-width:1100px; margin:0 auto; padding:28px 18px 80px}
+
+    header{display:flex; align-items:center; justify-content:space-between; gap:16px; margin:8px 0 26px}
+    .logo{display:flex; align-items:center; gap:14px; text-decoration:none}
+    .logo img{width:40px; height:40px; border-radius:10px}
+    .title{font-weight:800; font-size:2.1rem; letter-spacing:.2px}
+    .back{display:inline-flex; align-items:center; gap:8px; color:var(--brand-2)}
+
+    /* Hero */
+    .hero{margin:36px 0 22px}
+    h1{font-size:clamp(28px, 4vw, 40px); line-height:1.15; margin:0 0 10px}
+    .sub{color:var(--muted); max-width:78ch}
+
+    /* Cards / Grid */
+    .grid{display:grid; gap:18px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin:18px 0 10px}
+    .card{
+      background:linear-gradient(180deg, rgba(2,6,23,.7), rgba(2,6,23,.92));
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:22px 20px;
+      box-shadow:var(--shadow);
+    }
+    .badge{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:6px 10px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      color:var(--brand);
+      font-weight:600;
+      background:rgba(14,165,233,.08);
+    }
+    .price{font-size:34px; font-weight:800; letter-spacing:.2px; margin:8px 0}
+    .unit{font-size:14px; color:var(--muted); font-weight:500}
+    .kicker{margin:8px 0 0; color:#d9e7ff}
+
+    ul{list-style:none; padding:0; margin:12px 0 0}
+    li{
+      display:flex; align-items:flex-start; gap:10px;
+      margin:8px 0;
+      color:#d9e7ff;
+      line-height:1.5;
+    }
+    .dot{
+      flex-shrink:0;
+      width:8px; height:8px;
+      border-radius:50%;
+      background:var(--brand-2);
+      margin-top:8px;
+      box-shadow: 0 0 10px rgba(56,189,248,.6);
+    }
+
+    /* Details */
+    details{border:1px solid var(--line); border-radius:var(--radius-sm); padding:14px 16px; background:rgba(8,13,26,.55)}
+    summary{cursor:pointer; font-weight:800; color:var(--brand-2)}
+
+    /* CTA */
+    .cta{display:flex; gap:12px; flex-wrap:wrap; margin-top:16px}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:10px 14px;
+      border-radius:12px;
+      background:var(--brand);
+      color:#031123;
+      font-weight:800;
+      border:none;
+    }
+    .btn.alt{background:transparent; color:var(--brand-2); border:1px solid var(--line)}
+    .note{font-size:.9rem; color:var(--muted)}
+    .mini{font-size:.95rem; color:#d9e7ff}
+
+    .row{display:grid; grid-template-columns:1.15fr .85fr; gap:18px}
+    @media (max-width:900px){.row{grid-template-columns:1fr}}
+
+    footer{margin:26px 0 6px; color:var(--muted); font-size:.9rem}
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <a class="logo" href="/">
+        <img src="KT1.png" alt="KazTech logo" />
+        <span class="title">KazTech</span>
+      </a>
+      <a class="back" href="/pricing.html">← Back to Pricing</a>
+    </header>
+
+    <main>
+      <section class="hero">
+        <span class="badge">Plan 2 — Managed Services</span>
+        <h1>Proactive IT care — not just “call when something breaks”</h1>
+        <p class="sub">
+          Managed Services is designed for small businesses that want fewer surprises. You still get fast remote support,
+          but the real value is ongoing oversight — checking systems, keeping things updated, and catching issues early.
+        </p>
+      </section>
+
+      <section class="card">
+        <div class="row">
+          <div>
+            <div class="price">$125 <span class="unit">/ managed device / month</span></div>
+            <p class="kicker">
+              Includes proactive oversight + priority support + <strong>$65 monthly onsite service time</strong> to make hands-on help easier to plan.
+            </p>
+
+            <div class="cta">
+              <a class="btn" href="mailto:joe@kaztech99.com?subject=Managed%20Services%20Signup%20Request">Request Managed Services</a>
+              <a class="btn alt" href="#included">What’s included</a>
+              <a class="btn alt" href="#expectations">What to expect</a>
+            </div>
+
+            <p class="note" style="margin-top:10px">
+              <strong>About per-device pricing:</strong> Plans are priced per actively managed computer or system.
+              Most small businesses average 1–2 managed devices per employee.
+            </p>
+          </div>
+
+          <div>
+            <details open>
+              <summary>Best fit for</summary>
+              <ul>
+                <li><span class="dot"></span><span>Businesses that want stable, reliable systems with fewer interruptions.</span></li>
+                <li><span class="dot"></span><span>Owners who want one person accountable for IT health — not just break/fix.</span></li>
+                <li><span class="dot"></span><span>Teams that prefer prevention and planning over surprises.</span></li>
+              </ul>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <div class="grid" id="included" style="margin-top:20px">
+        <section class="card">
+          <span class="badge">What’s included</span>
+          <ul>
+            <li><span class="dot"></span><span><strong>Unlimited remote support</strong> for day-to-day issues (phone/email/remote access).</span></li>
+            <li><span class="dot"></span><span><strong>Proactive system oversight</strong> — ongoing monitoring and check-ins to prevent disruptions.</span></li>
+            <li><span class="dot"></span><span><strong>Routine maintenance</strong> (performance checks, cleanup, common stability fixes).</span></li>
+            <li><span class="dot"></span><span><strong>Update management guidance</strong> (OS/app updates coordinated to reduce risk and downtime).</span></li>
+            <li><span class="dot"></span><span><strong>Priority scheduling</strong> for time-sensitive issues and onsite work.</span></li>
+            <li><span class="dot"></span><span><strong>Onsite service time included</strong>: $65/month, rollover up to 3 months (max $195).</span></li>
+          </ul>
+          <p class="note" style="margin-top:10px">
+            Note: Specific tools (monitoring/security/backup products) vary by environment. The goal stays the same: stable, secure, and predictable systems.
+          </p>
+        </section>
+
+        <section class="card">
+          <span class="badge">Response targets</span>
+          <p class="mini" style="margin-top:10px">
+            When you reach out, you’ll always hear back quickly. Target response times:
+          </p>
+          <ul>
+            <li><span class="dot"></span><span><strong>Critical:</strong> within 1 hour</span></li>
+            <li><span class="dot"></span><span><strong>High:</strong> within 4 hours</span></li>
+            <li><span class="dot"></span><span><strong>Normal:</strong> same business day</span></li>
+            <li><span class="dot"></span><span><strong>Low:</strong> next business day</span></li>
+          </ul>
+          <p class="note" style="margin-top:10px">
+            After-hours support is available; some non-urgent issues may wait until normal business hours.
+          </p>
+        </section>
+      </div>
+
+      <div class="grid" id="expectations" style="margin-top:8px">
+        <section class="card">
+          <span class="badge">What we do proactively</span>
+          <p class="mini" style="margin-top:10px">
+            Managed Services isn’t “set it and forget it.” Here’s the kind of routine work you can expect:
+          </p>
+          <ul>
+            <li><span class="dot"></span><span><strong>Health checks:</strong> device status, performance, and reliability indicators.</span></li>
+            <li><span class="dot"></span><span><strong>Update coordination:</strong> helping keep systems current without breaking workflows.</span></li>
+            <li><span class="dot"></span><span><strong>Account & access hygiene:</strong> basic review of common login/access issues and best practices.</span></li>
+            <li><span class="dot"></span><span><strong>Security posture basics:</strong> reduce obvious risk where possible (phishing safety, device hardening basics).</span></li>
+            <li><span class="dot"></span><span><strong>Backup awareness:</strong> if backups exist, confirm they’re running and discuss gaps.</span></li>
+            <li><span class="dot"></span><span><strong>Planning & recommendations:</strong> identify weak points and propose fixes before they become emergencies.</span></li>
+          </ul>
+          <p class="note" style="margin-top:10px">
+            The exact checklist depends on your environment — but the outcome is always the same: fewer fires, fewer surprises.
+          </p>
+        </section>
+
+        <section class="card">
+          <span class="badge">What you can expect</span>
+          <ul>
+            <li><span class="dot"></span><span><strong>One point of contact:</strong> you’ll work directly with the same person who knows your setup.</span></li>
+            <li><span class="dot"></span><span><strong>Clear communication:</strong> what’s happening, what’s recommended, and why.</span></li>
+            <li><span class="dot"></span><span><strong>Less downtime:</strong> small issues get addressed before they become big ones.</span></li>
+            <li><span class="dot"></span><span><strong>Predictable billing:</strong> stable monthly cost for managed devices.</span></li>
+            <li><span class="dot"></span><span><strong>Onsite time that’s planned:</strong> monthly included onsite service time for hands-on needs.</span></li>
+          </ul>
+
+          <details style="margin-top:14px" open>
+            <summary>Onsite service time terms</summary>
+            <ul>
+              <li><span class="dot"></span><span><strong>Monthly included time:</strong> $65 onsite labor value added each billing cycle while enrolled.</span></li>
+              <li><span class="dot"></span><span><strong>Rollover:</strong> unused value rolls for up to 3 months; max bank $195.</span></li>
+              <li><span class="dot"></span><span><strong>Use:</strong> applies to onsite labor only (not parts, third-party services, or project work).</span></li>
+              <li><span class="dot"></span><span><strong>Additional onsite:</strong> $65/hr (1-hr minimum); after-hours onsite 1.5×.</span></li>
+              <li><span class="dot"></span><span><strong>Travel:</strong> first 35 miles included per visit; beyond that billed at $1/mile.</span></li>
+            </ul>
+          </details>
+        </section>
+      </div>
+
+      <div class="grid" style="margin-top:8px">
+        <section class="card">
+          <span class="badge">What’s included vs projects</span>
+          <p class="mini" style="margin-top:10px; color:#d9e7ff">
+            Managed Services covers day-to-day troubleshooting, configuration changes, routine maintenance, updates coordination,
+            and user support for managed devices.
+          </p>
+          <p class="mini" style="margin-top:10px; color:#d9e7ff">
+            <strong>Projects</strong> are quoted separately (examples: new office builds, major network redesigns, migrations, data recovery,
+            server deployments, large rollouts, cabling, and anything that requires extended onsite time or major planning).
+          </p>
+        </section>
+
+        <section class="card">
+          <span class="badge">Onboarding (first 1–2 weeks)</span>
+          <ul>
+            <li><span class="dot"></span><span><strong>Discovery:</strong> review devices, accounts, Wi-Fi/network basics, and current pain points.</span></li>
+            <li><span class="dot"></span><span><strong>Stabilize:</strong> fix obvious issues that cause recurring interruptions.</span></li>
+            <li><span class="dot"></span><span><strong>Standardize:</strong> align basics (updates, security hygiene, backups where applicable).</span></li>
+            <li><span class="dot"></span><span><strong>Plan:</strong> agree on priorities and what “good” looks like moving forward.</span></li>
+          </ul>
+          <p class="note" style="margin-top:10px">
+            If major upgrades are needed (hardware replacements, network rebuilds, migrations), those are typically handled as a separate project.
+          </p>
+        </section>
+      </div>
+
+      <section class="card" style="margin-top:18px">
+        <span class="badge">Ready to start?</span>
+        <p class="kicker" style="margin-top:10px">
+          If you want fewer surprises and faster resolution when things go wrong, Managed Services is the plan built for that.
+        </p>
+        <div class="cta">
+          <a class="btn" href="mailto:joe@kaztech99.com?subject=Managed%20Services%20Signup%20Request">Request Managed Services</a>
+          <a class="btn alt" href="/pricing.html">View pricing page</a>
+        </div>
+      </section>
+
+      <footer>
+        <div>KazTech — North Royalton, OH</div>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>
