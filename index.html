@@ -28,20 +28,15 @@
     }
     *{box-sizing:border-box}
     
-html{min-height:100%;
-  background:
-    radial-gradient(1200px 800px at 80% -10%, rgba(14,165,255,.12), transparent 60%),
-    radial-gradient(1000px 600px at -10% 120%, rgba(0,179,255,.14), transparent 60%),
-    var(--bg);
-  background-attachment: fixed;
-}
-body{
-  margin:0;
-  min-height:100%;
-  background:transparent;
-  color:var(--ink);
-  font:16px/1.6 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, "Apple Color Emoji","Segoe UI Emoji";
-}
+    html,body{height:100%}
+    body{
+      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1200px 800px at 80% -10%, rgba(14,165,255,.12), transparent 60%),
+                  radial-gradient(1000px 600px at -10% 120%, rgba(0,179,255,.14), transparent 60%),
+                  var(--bg);
+      color:var(--text);
+      line-height:1.5;
+    }
     
     .wrap{max-width:1100px; margin:0 auto; padding:24px}
     header{display:flex; align-items:center; justify-content:space-between; gap:16px; padding:12px 0}
@@ -230,6 +225,7 @@ body{
   <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "e01c86ecf4834c96ad9875aa290d9fb2"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
+
 
 
 
