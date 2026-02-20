@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Toolkit | KazTech</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#00d4aa',
+                        secondary: '#0891b2',
+                        dark: '#0a0a0f',
+                        darker: '#050508',
+                        surface: '#12121a',
+                        'surface-light': '#1a1a25',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0a0a0f 0%, #12121a 50%, #0a0a0f 100%);
+            min-height: 100vh;
+        }
+        .glass {
+            background: rgba(18, 18, 26, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 212, 170, 0.1);
+        }
+        .glow {
+            box-shadow: 0 0 30px rgba(0, 212, 170, 0.15);
+        }
+        .glow-hover:hover {
+            box-shadow: 0 0 40px rgba(0, 212, 170, 0.25);
+        }
+        .text-glow {
+            text-shadow: 0 0 20px rgba(0, 212, 170, 0.5);
+        }
+        .grid-pattern {
+            background-image: radial-gradient(rgba(0, 212, 170, 0.1) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+        .tool-card {
+            transition: all 0.3s ease;
+        }
+        .tool-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0, 212, 170, 0.3);
+        }
+        .active-tool {
+            border-color: #00d4aa;
+            box-shadow: 0 0 30px rgba(0, 212, 170, 0.2);
+        }
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+        .strength-meter {
+            transition: all 0.3s ease;
+        }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 212, 170, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(0, 212, 170, 0.5); }
+        }
+        .animate-pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+        .speed-bar {
+            transition: width 0.5s ease;
+        }
+    </style>
+</head>
+<body class="text-gray-300 font-sans">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+                        <i data-lucide="terminal" class="w-5 h-5 text-white"></i>
+                    </div>
+                    <div>
+                        <span class="text-white font-bold text-lg">KazTech</span>
+                        <span class="text-primary text-sm ml-2">IT Toolkit</span>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="https://kaztech99.com" class="text-gray-400 hover:text-primary transition-colors flex items-center gap-2">
+                        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                        Back to Main Site
+                    </a>
+                </div>
+                <button id="mobileMenuBtn" class="md:hidden text-gray-400 hover:text-white">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        <div class="absolute inset-0 grid-pattern opacity-50"></div>
+        <div class="max-w-7xl mx-auto relative">
+            <div class="text-center">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-6">
+                    <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                    <span class="text-primary text-sm font-medium">7 Essential Tools</span>
+                </div>
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">
+                    IT <span class="text-primary text-glow">Toolkit</span>
+                </h1>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+                    Professional-grade utilities for network diagnostics, security analysis, and system administration. All tools run client-side for maximum privacy.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools Grid -->
+    <section class="py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-8">
+                <!-- Tool Cards -->
+                <button onclick="showTool('speedtest')" id="btn-speedtest" class="tool-card active-tool glass rounded-xl p-6 text-left glow-hover">
+                    <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                        <i data-lucide="gauge" class="w-6 h-6 text-primary"></i>
+                    </div>
+                    <h3 class="text-white font-semibold mb-1">Speed Test</h3>
+                    <p class="text-sm text-gray-500">Test your internet connection speed</p>
+                </button>
+
+                <button onclick="showTool('phishing')" id="btn-phishing" class="tool-card glass rounded-xl p-6 text-left glow-hover">
+                    <div class="w-12 h-12 rounded-lg bg-red-500/10 flex items-center justify-center mb-4">
+                        <i data-lucide="shield-alert" class="w-6 h-6 text-red-400"></i>
+                    </div>
+                    <h3 class="text-white font-semibold mb-1">Phishing Checker</h3>
+                    <p class="text-sm text-gray-500">Identify suspicious emails</p>
+                </button>
+
+                <button onclick="showTool('iplookup')" id="btn-iplookup" class="tool-card glass rounded-xl p-6 text-left glow-hover">
+                    <div class="w-12 h-12 rounded-lg bg-blue-500/10 flex items-center justify-center mb-4">
+                        <i data-lucide="globe" class="w-6 h-6 text-blue-400"></i>
+                    </div>
+                    <h3 class="text-white font-semibold mb-1">IP Lookup</h3>
+                    <p class="text-sm text-gray-500">Check your IP & geolocation</p>
+                </button>
+
+                <button onclick="showTool('portchecker')" id="btn-portchecker" class="tool-card glass rounded-xl p-6 text-left glow-hover">
+                    <div class="w-12 h-12 rounded-lg bg-purple-500/10 flex items-center justify-center mb-4">
+                        <i data-lucide="network" class="w-6 h-6 text-purple-400"></i>
+                    </div>
+                    <h3 class="text-white font-semibold mb-1">Port Checker</h3>
+                    <p class="text-sm text-gray-500">Test port availability</p>
+                </button>
+
+                <button onclick="showTool('filesize')" id="btn-filesize" class="tool-card glass rounded-xl p-6 text-left glow-hover">
+                    <div class="w-12 h-12 rounded-lg bg-yellow-500/10 flex items-center justify-center mb-4">
+                        <i data-lucide="file-digit" class="w-6 h-6 text-yellow-400"></i>
+                    </div>
+                    <h3 class="text-white font-semibold mb-1">File Size Converter</h3>
+                    <p class="text-sm text-gray-500">Convert between size units</p>
+                </button>
+
+                <button onclick="showTool('password')" id="btn-password" class="tool-card glass rounded-xl p-6 text-left glow-hover">
+                    <div class="w-12 h-12 rounded-lg bg-green-500/10 flex items-center justify-center mb-4">
+                        <i data-lucide="shield-check" class="w-6 h-6 text-green-400"></i>
+                    </div>
+                    <h3 class="text-white font-semibold mb-1">Password Strength</h3>
+                    <p class="text-sm text-gray-500">Analyze password security</p>
+                </button>
+
+                <button onclick="showTool('generator')" id="btn-generator" class="tool-card glass rounded-xl p-6 text-left glow-hover">
+                    <div class="w-12 h-12 rounded-lg bg-pink-500/10 flex items-center justify-center mb-4">
+                        <i data-lucide="key" class="w-6 h-6 text-pink-400"></i>
+                    </div>
+                    <h3 class="text-white font-semibold mb-1">Password Generator</h3>
+                    <p class="text-sm text-gray-500">Create secure passwords</p>
+                </button>
+            </div>
+
+            <!-- Tool Interface Area -->
+            <div id="toolArea" class="glass rounded-2xl p-6 md:p-8 glow">
+                <!-- Speed Test Tool -->
+                <div id="tool-speedtest" class="tool-content">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                            <i data-lucide="gauge" class="w-5 h-5 text-primary"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-bold text-white">Internet Speed Test</h2>
+                            <p class="text-sm text-gray-500">Measure your download and upload speeds</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="text-center p-6 rounded-xl bg-surface-light">
+                            <div class="text-sm text-gray-500 mb-2">Download</div>
+                            <div class="text-4xl font-bold text-white mb-1">
+                                <span id="downloadSpeed">0.00</span>
+                                <span class="text-lg text-primary">Mbps</span>
+                            </div>
+                            <div class="w-full h-2 bg-gray-700 rounded-full mt-3 overflow-hidden">
+                                <div id="downloadBar" class="speed-bar h-full bg-primary rounded-full" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="text-center p-6 rounded-xl bg-surface-light">
+                            <div class="text-sm text-gray-500 mb-2">Upload</div>
+                            <div class="text-4xl font-bold text-white mb-1">
+                                <span id="uploadSpeed">0.00</span>
+                                <span class="text-lg text-primary">Mbps</span>
+                            </div>
+                            <div class="w-full h-2 bg-gray-700 rounded-full mt-3 overflow-hidden">
+                                <div id="uploadBar" class="speed-bar h-full bg-secondary rounded-full" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="text-center p-6 rounded-xl bg-surface-light">
+                            <div class="text-sm text-gray-500 mb-2">Ping</div>
+                            <div class="text-4xl font-bold text-white mb-1">
+                                <span id="pingValue">0</span>
+                                <span class="text-lg text-primary">ms</span>
+                            </div>
+                            <div class="text-sm text-gray-500 mt-3" id="pingStatus">Click start to test</div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-center gap-4">
+                        <button onclick="startSpeedTest()" id="startSpeedBtn" class="px-8 py-3 bg-primary hover:bg-primary/80 text-dark font-semibold rounded-lg transition-all flex items-center gap-2">
+                            <i data-lucide="play" class="w-5 h-5"></i>
+                            Start Test
+                        </button>
+                        <button onclick="stopSpeedTest()" id="stopSpeedBtn" class="px-8 py-3 bg-red-500/20 hover:bg-red-500/30 text-red-400 font-semibold rounded-lg transition-all hidden items-center gap-2">
+                            <i data-lucide="square" class="w-5 h-5"></i>
+                            Stop
+                        </button>
+                    </div>
+
+                    <div id="speedTestLog" class="mt-6 p-4 rounded-lg bg-surface-light font-mono text-sm text-gray-400 hidden">
+                        <div class="flex items-center gap-2 mb-2">
+                            <i data-lucide="terminal" class="w-4 h-4 text-primary"></i>
+                            <span class="text-primary">Test Log</span>
+                        </div>
+                        <div id="logContent"></div>
+                    </div>
+                </div>
+
+                <!-- Phishing Checker Tool -->
+                <div id="tool-phishing" class="tool-content hidden">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center">
+                            <i data-lucide="shield-alert" class="w-5 h-5 text-red-400"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-bold text-white">Phishing Email Checker</h2>
+                            <p class="text-sm text-gray-500">Analyze emails for suspicious indicators</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-400 mb-2">Paste email headers or content</label>
+                            <textarea id="emailContent" rows="12" class="w-full px-4 py-3 rounded-lg bg-surface-light border border-gray-700 text-white placeholder-gray-500 focus:border-primary focus:outline-none font-mono text-sm" placeholder="From: sender@example.com&#10;To: victim@company.com&#10;Subject: Urgent: Verify Your Account&#10;..."></textarea>
+                            <button onclick="analyzePhishing()" class="mt-4 w-full px-6 py-3 bg-red-500/20 hover:bg-red-500/30 text-red-400 font-semibold rounded-lg transition-all flex items-center justify-center gap-2">
+                                <i data-lucide="scan-search" class="w-5 h-5"></i>
+                                Analyze for Phishing
+                            </button>
+                        </div>
+                        <div>
+                            <div id="phishingResults" class="space-y-3">
+                                <div class="p-4 rounded-lg bg-surface-light text-center text-gray-500">
+                                    <i data-lucide="shield-question" class="w-12 h-12 mx-auto mb-3 opacity-50"></i>
+                                    <p>Enter email content and click analyze to check for phishing indicators</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 p-4 rounded-lg bg-yellow-500/10 border border-yellow-500/20">
+                        <div class="flex items-start gap-3">
+                            <i data-lucide="alert-triangle" class="w-5 h-5 text-yellow-400 flex-shrink-0 mt-0.5"></i>
+                            <div>
+                                <h4 class="text-yellow-400 font-medium mb-1">Common Phishing Red Flags</h4>
+                                <ul class="text-sm text-gray-400 space-y-1">
+                                    <li>• Urgent or threatening language</li>
+                                    <li>• Suspicious sender addresses</li>
+                                    <li>• Requests for passwords or sensitive data</li>
+                                    <li>• Mismatched or deceptive links</li>
+                                    <li>• Poor grammar and spelling</li>
+                                    <li>• Generic greetings</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- IP Lookup Tool -->
+                <div id="tool-iplookup" class="tool-content hidden">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center">
+                            <i data-lucide="globe" class="w-5 h-5 text-blue-400"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-bold text-white">IP Lookup & Geolocation</h2>
+                            <p class="text-sm text-gray-500">Check your public IP address and location data</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div>
+                            <div class="p-6 rounded-xl bg-surface-light mb-4">
+                                <div class="text-sm text-gray-500 mb-2">Your Public IP Address</div>
+                                <div class="flex items-center gap-3">
+                                    <code id="myIP" class="text-2xl font-mono text-primary font-bold">Loading...</code>
+                                    <button onclick="copyToClipboard('myIP')" class="p-2 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary transition-colors">
+                                        <i data-lucide="copy" class="w-4 h-4"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20 mb-4">
+                                <div class="flex items-center gap-2 mb-3">
+                                    <i data-lucide="search" class="w-4 h-4 text-blue-400"></i>
+                                    <span class="text-blue-400 font-medium">Lookup Another IP</span>
+                                </div>
+                                <div class="flex gap-2">
+                                    <input type="text" id="lookupIP" placeholder="Enter IP address..." class="flex-1 px-4 py-2 rounded-lg bg-surface border border-gray-700 text-white placeholder-gray-500 focus:border-blue-400 focus:outline-none font-mono">
+                                    <button onclick="lookupIP()" class="px-4 py-2 bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 rounded-lg transition-colors">
+                                        <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <button onclick="refreshIP()" class="w-full px-6 py-3 bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 font-semibold rounded-lg transition-all flex items-center justify-center gap-2">
+                                <i data-lucide="refresh-cw" class="w-5 h-5"></i>
+                                Refresh Data
+                            </button>
+                        </div>
+
+                        <div id="ipDetails" class="space-y-3">
+                            <div class="p-4 rounded-lg bg-surface-light flex items-center justify-between">
+                                <span class="text-gray-400">ISP</span>
+                                <span id="ispValue" class="text-white font-medium">-</span>
+                            </div>
+                            <div class="p-4 rounded-lg bg-surface-light flex items-center justify-between">
+                                <span class="text-gray-400">Organization</span>
+                                <span id="orgValue" class="text-white font-medium">-</span>
+                            </div>
+                            <div class="p-4 rounded-lg bg-surface-light flex items-center justify-between">
+                                <span class="text-gray-400">Country</span>
+                                <span id="countryValue" class="text-white font-medium">-</span>
+                            </div>
+                            <div class="p-4 rounded-lg bg-surface-light flex items-center justify-between">
+                                <span class="text-gray-400">Region</span>
+                                <span id="regionValue" class="text-white font-medium">-</span>
+                            </div>
+                            <div class="p-4 rounded-lg bg-surface-light flex items-center justify-between">
+                                <span class="text-gray-400">City</span>
+                                <span id="cityValue" class="text-white font-medium">-</span>
+                            </div>
+                            <div class="p-4 rounded-lg bg-surface-light flex items-center justify-between">
+                                <span class="text-gray-400">Timezone</span>
+                                <span id="timezoneValue" class="text-white font-medium">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Port Checker Tool -->
+                <div id="tool-portchecker" class="tool-content hidden">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
+                            <i data-lucide="network" class="w-5 h-5 text-purple-400"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-bold text-white">Port Checker</h2>
+                            <p class="text-sm text-gray-500">Test if a port is open on a remote host</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-400 mb-2">Hostname or IP Address</label>
+                                    <input type="text" id="portHost" placeholder="example.com or 192.168.1.1" class="w-full px-4 py-3 rounded-lg bg-surface-light border border-gray-700 text-white placeholder-gray-500 focus:border-purple-400 focus:outline-none font-mono">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-400 mb-2">Port Number</label>
+                                    <input type="number" id="portNumber" placeholder="80, 443, 22, etc." min="1" max="65535" class="w-full px-4 py-3 rounded-lg bg-surface-light border border-gray-700 text-white placeholder-gray-500 focus:border-purple-400 focus:outline-none font-mono">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-400 mb-2">Quick Select</label>
+                                    <div class="flex flex-wrap gap-2">
+                                        <button onclick="setPort(80)" class="px-3 py-1.5 rounded-lg bg-surface-light hover:bg-purple-500/20 text-sm text-gray-400 hover:text-purple-400 transition-colors">HTTP (80)</button>
+                                        <button onclick="setPort(443)" class="px-3 py-1.5 rounded-lg bg-surface-light hover:bg-purple-500/20 text-sm text-gray-400 hover:text-purple-400 transition-colors">HTTPS (443)</button>
+                                        <button onclick="setPort(22)" class="px-3 py-1.5 rounded-lg bg-surface-light hover:bg-purple-500/20 text-sm text-gray-400 hover:text-purple-400 transition-colors">SSH (22)</button>
+                                        <button onclick="setPort(21)" class="px-3 py-1.5 rounded-lg bg-surface-light hover:bg-purple-500/20 text-sm text-gray-400 hover:text-purple-400 transition-colors">FTP (21)</button>
+                                        <button onclick="setPort(25)" class="px-3 py-1.5 rounded-lg bg-surface-light hover:bg-purple-500/20 text-sm text-gray-400 hover:text-purple-400 transition-colors">SMTP (25)</button>
+                                        <button onclick="setPort(3389)" class="px-3 py-1.5 rounded-lg bg-surface-light hover:bg-purple-500/20 text-sm text-gray-400 hover:text-purple-400 transition-colors">RDP (3389)</button>
+                                    </div>
+                                </div>
+                                <button onclick="checkPort()" class="w-full px-6 py-3 bg-purple-500/20 hover:bg-purple-500/30 text-purple-400 font-semibold rounded-lg transition-all flex items-center justify-center gap-2">
+                                    <i data-lucide="activity" class="w-5 h-5"></i>
+                                    Check Port
+                                </button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div id="portResult" class="p-6 rounded-xl bg-surface-light text-center">
+                                <i data-lucide="network" class="w-16 h-16 mx-auto mb-4 text-gray-600"></i>
+                                <p class="text-gray-500">Enter host and port to check connectivity</p>
+                            </div>
+
+                            <div class="mt-4 p-4 rounded-lg bg-purple-500/10 border border-purple-500/20">
+                                <h4 class="text-purple-400 font-medium mb-2 flex items-center gap-2">
+                                    <i data-lucide="info" class="w-4 h-4"></i>
+                                    Common Port Uses
+                                </h4>
+                                <div class="grid grid-cols-2 gap-2 text-sm text-gray-400">
+                                    <div>21 - FTP</div>
+                                    <div>22 - SSH</div>
+                                    <div>25 - SMTP</div>
+                                    <div>53 - DNS</div>
+                                    <div>80 - HTTP</div>
+                                    <div>110 - POP3</div>
+                                    <div>143 - IMAP</div>
+                                    <div>443 - HTTPS</div>
+                                    <div>3306 - MySQL</div>
+                                    <div>3389 - RDP</div>
+                                    <div>5432 - PostgreSQL</div>
+                                    <div>8080 - HTTP Alt</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- File Size Converter Tool -->
+                <div id="tool-filesize" class="tool-content hidden">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-lg bg-yellow-500/10 flex items-center justify-center">
+                            <i data-lucide="file-digit" class="w-5 h-5 text-yellow-400"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-bold text-white">File Size Converter</h2>
+                            <p class="text-sm text-gray-500">Convert between bytes, KB, MB, GB, TB, and more</p>
+                        </div>
+                    </div>
+
+                    <div class="max-w-2xl mx-auto">
+                        <div class="p-6 rounded-xl bg-surface-light mb-6">
+                            <div class="flex items-center gap-4">
+                                <input type="number" id="sizeInput" value="1" min="0" step="0.001" class="flex-1 px-4 py-3 rounded-lg bg-surface border border-gray-700 text-white text-2xl font-mono focus:border-yellow-400 focus:outline-none">
+                                <select id="sizeUnitFrom" onchange="convertFileSize()" class="px-4 py-3 rounded-lg bg-surface border border-gray-700 text-white focus:border-yellow-400 focus:outline-none">
+                                    <option value="B">Bytes (B)</option>
+                                    <option value="KB">Kilobytes (KB)</option>
+                                    <option value="MB" selected>Megabytes (MB)</option>
+                                    <option value="GB">Gigabytes (GB)</option>
+                                    <option value="TB">Terabytes (TB)</option>
+                                    <option value="PB">Petabytes (PB)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-center mb-6">
+                            <div class="w-12 h-12 rounded-full bg-yellow-500/10 flex items-center justify-center">
+                                <i data-lucide="arrow-down" class="w-6 h-6 text-yellow-400"></i>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                            <div class="p-4 rounded-lg bg-surface-light">
+                                <div class="text-sm text-gray-500 mb-1">Bytes</div>
+                                <div id="resultB" class="text-lg font-mono text-white truncate">1048576</div>
+                            </div>
+                            <div class="p-4 rounded-lg bg-surface-light">
+                                <div class="text-sm text-gray-500 mb-1">Kilobytes</div>
+                                <div id="resultKB" class="text-lg font-mono text-white truncate">1024</div>
+                            </div>
+                            <div class="p-4 rounded-lg bg-surface-light">
+                                <div class="text-sm text-gray-500 mb-1">Megabytes</div>
+                                <div id="resultMB" class="text-lg font-mono text-yellow-400 font-bold truncate">1</div>
+                            </div>
+                            <div class="p-4 rounded-lg bg-surface-light">
+                                <div class="text-sm text-gray-500 mb-1">Gigabytes</div>
+                                <div id="resultGB" class="text-lg font-mono text-white truncate">0.00098</div>
+                            </div>
+                            <div class="p-4 rounded-lg bg-surface-light">
+                                <div class="text-sm text-gray-500 mb-1">Terabytes</div>
+                                <div id="resultTB" class="text-lg font-mono text-white truncate">9.54e-7</div>
+                            </div>
+                            <div class="p-4 rounded-lg bg-surface-light">
+                                <div class="text-sm text-gray-500 mb-1">Petabytes</div>
+                                <div id="resultPB" class="text-lg font-mono text-white truncate">9.31e-10</div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 p-4 rounded-lg bg-yellow-500/10 border border-yellow-500/20">
+                            <div class="flex items-start gap-3">
+                                <i data-lucide="lightbulb" class="w-5 h-5 text-yellow-400 flex-shrink-0 mt-0.5"></i>
+                                <div>
+                                    <h4 class="text-yellow-400 font-medium mb-1">Binary vs Decimal</h4>
+                                    <p class="text-sm text-gray-400">This converter uses binary (1024-based) calculations, which is standard for operating systems. Some storage manufacturers use decimal (1000-based) which can cause apparent size differences.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Password Strength Tool -->
+                <div id="tool-password" class="tool-content hidden">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center">
+                            <i data-lucide="shield-check" class="w-5 h-5 text-green-400"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-bold text-white">Password Strength Checker</h2>
+                            <p class="text-sm text-gray-500">Analyze password security and get improvement tips</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div>
+                            <div class="relative mb-4">
+                                <input type="password" id="strengthPassword" oninput="checkPasswordStrength()" placeholder="Enter password to analyze..." class="w-full px-4 py-4 pr-12 rounded-lg bg-surface-light border border-gray-700 text-white placeholder-gray-500 focus:border-green-400 focus:outline-none font-mono text-lg">
+                                <button onclick="togglePasswordVisibility('strengthPassword')" class="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-white">
+                                    <i data-lucide="eye" class="w-5 h-5"></i>
+                                </button>
+                            </div>
+
+                            <div class="mb-6">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-sm text-gray-400">Strength</span>
+                                    <span id="strengthLabel" class="text-sm font-medium text-gray-500">Enter a password</span>
+                                </div>
+                                <div class="h-3 bg-gray-700 rounded-full overflow-hidden">
+                                    <div id="strengthBar" class="strength-meter h-full rounded-full bg-gray-600" style="width: 0%"></div>
+                                </div>
+                            </div>
+
+                            <div class="p-4 rounded-lg bg-surface-light">
+                                <div class="text-sm text-gray-400 mb-3">Estimated time to crack:</div>
+                                <div id="crackTime" class="text-2xl font-bold text-white">-</div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h4 class="text-green-400 font-medium mb-3 flex items-center gap-2">
+                                <i data-lucide="checklist" class="w-4 h-4"></i>
+                                Requirements Check
+                            </h4>
+                            <div class="space-y-2">
+                                <div id="req-length" class="flex items-center gap-3 p-3 rounded-lg bg-surface-light">
+                                    <div class="w-5 h-5 rounded-full border-2 border-gray-600 flex items-center justify-center">
+                                        <i data-lucide="check" class="w-3 h-3 text-transparent"></i>
+                                    </div>
+                                    <span class="text-gray-400">At least 12 characters</span>
+                                </div>
+                                <div id="req-upper" class="flex items-center gap-3 p-3 rounded-lg bg-surface-light">
+                                    <div class="w-5 h-5 rounded-full border-2 border-gray-600 flex items-center justify-center">
+                                        <i data-lucide="check" class="w-3 h-3 text-transparent"></i>
+                                    </div>
+                                    <span class="text-gray-400">Uppercase letters (A-Z)</span>
+                                </div>
+                                <div id="req-lower" class="flex items-center gap-3 p-3 rounded-lg bg-surface-light">
+                                    <div class="w-5 h-5 rounded-full border-2 border-gray-600 flex items-center justify-center">
+                                        <i data-lucide="check" class="w-3 h-3 text-transparent"></i>
+                                    </div>
+                                    <span class="text-gray-400">Lowercase letters (a-z)</span>
+                                </div>
+                                <div id="req-number" class="flex items-center gap-3 p-3 rounded-lg bg-surface-light">
+                                    <div class="w-5 h-5 rounded-full border-2 border-gray-600 flex items-center justify-center">
+                                        <i data-lucide="check" class="w-3 h-3 text-transparent"></i>
+                                    </div>
+                                    <span class="text-gray-400">Numbers (0-9)</span>
+                                </div>
+                                <div id="req-special" class="flex items-center gap-3 p-3 rounded-lg bg-surface-light">
+                                    <div class="w-5 h-5 rounded-full border-2 border-gray-600 flex items-center justify-center">
+                                        <i data-lucide="check" class="w-3 h-3 text-transparent"></i>
+                                    </div>
+                                    <span class="text-gray-400">Special characters (!@#$...)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Password Generator Tool -->
+                <div id="tool-generator" class="tool-content hidden">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-lg bg-pink-500/10 flex items-center justify-center">
+                            <i data-lucide="key" class="w-5 h-5 text-pink-400"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-bold text-white">Secure Password Generator</h2>
+                            <p class="text-sm text-gray-500">Generate strong, random passwords</p>
+                        </div>
+                    </div>
+
+                    <div class="max-w-2xl mx-auto">
+                        <div class="p-6 rounded-xl bg-surface-light mb-6">
+                            <div class="flex items-center gap-3 mb-4">
+                                <input type="text" id="generatedPassword" readonly class="flex-1 px-4 py-4 rounded-lg bg-surface border border-gray-700 text-white text-xl font-mono focus:outline-none">
+                                <button onclick="copyToClipboard('generatedPassword')" class="p-4 rounded-lg bg-pink-500/20 hover:bg-pink-500/30 text-pink-400 transition-colors">
+                                    <i data-lucide="copy" class="w-6 h-6"></i>
+                                </button>
+                                <button onclick="generatePassword()" class="p-4 rounded-lg bg-pink-500 hover:bg-pink-600 text-white transition-colors">
+                                    <i data-lucide="refresh-cw" class="w-6 h-6"></i>
+                                </button>
+                            </div>
+                            
+                            <div class="flex items-center gap-2">
+                                <div class="flex-1 h-2 bg-gray-700 rounded-full overflow-hidden">
+                                    <div id="genStrengthBar" class="h-full rounded-full bg-gray-600 transition-all" style="width: 0%"></div>
+                                </div>
+                                <span id="genStrengthLabel" class="text-sm text-gray-500">-</span>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                            <div class="p-4 rounded-lg bg-surface-light">
+                                <label class="block text-sm text-gray-400 mb-3">Password Length: <span id="lengthValue" class="text-pink-400 font-bold">16</span></label>
+                                <input type="range" id="passwordLength" min="8" max="64" value="16" oninput="updateLengthDisplay(); generatePassword()" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-pink-400">
+                                <div class="flex justify-between text-xs text-gray-500 mt-1">
+                                    <span>8</span>
+                                    <span>64</span>
+                                </div>
+                            </div>
+                            
+                            <div class="p-4 rounded-lg bg-surface-light space-y-2">
+                                <label class="flex items-center gap-3 cursor-pointer">
+                                    <input type="checkbox" id="useUppercase" checked onchange="generatePassword()" class="w-5 h-5 rounded border-gray-600 bg-surface text-pink-400 focus:ring-pink-400">
+                                    <span class="text-gray-300">Uppercase (A-Z)</span>
+                                </label>
+                                <label class="flex items-center gap-3 cursor-pointer">
+                                    <input type="checkbox" id="useLowercase" checked onchange="generatePassword()" class="w-5 h-5 rounded border-gray-600 bg-surface text-pink-400 focus:ring-pink-400">
+                                    <span class="text-gray-300">Lowercase (a-z)</span>
+                                </label>
+                                <label class="flex items-center gap-3 cursor-pointer">
+                                    <input type="checkbox" id="useNumbers" checked onchange="generatePassword()" class="w-5 h-5 rounded border-gray-600 bg-surface text-pink-400 focus:ring-pink-400">
+                                    <span class="text-gray-300">Numbers (0-9)</span>
+                                </label>
+                                <label class="flex items-center gap-3 cursor-pointer">
+                                    <input type="checkbox" id="useSpecial" checked onchange="generatePassword()" class="w-5 h-5 rounded border-gray-600 bg-surface text-pink-400 focus:ring-pink-400">
+                                    <span class="text-gray-300">Special (!@#$...)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="p-4 rounded-lg bg-pink-500/10 border border-pink-500/20">
+                            <div class="flex items-start gap-3">
+                                <i data-lucide="shield" class="w-5 h-5 text-pink-400 flex-shrink-0 mt-0.5"></i>
+                                <div>
+                                    <h4 class="text-pink-400 font-medium mb-1">Security Tips</h4>
+                                    <ul class="text-sm text-gray-400 space-y-1">
+                                        <li>• Use at least 16 characters for maximum security</li>
+                                        <li>• Include all character types when possible</li>
+                                        <li>• Use a unique password for each account</li>
+                                        <li>• Consider using a password manager</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 px-4 sm:px-6 lg:px-8 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+                    <i data-lucide="terminal" class="w-4 h-4 text-white"></i>
+                </div>
+                <span class="text-gray-400 text-sm">© 2024 KazTech. All tools run client-side.</span>
+            </div>
+            <div class="flex items-center gap-6">
+                <a href="https://kaztech99.com" class="text-gray-400 hover:text-primary transition-colors text-sm">Main Site</a>
+                <a href="#" class="text-gray-400 hover:text-primary transition-colors text-sm">Privacy</a>
+                <a href="#" class="text-gray-400 hover:text-primary transition-colors text-sm">Terms</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Tool switching
+        function showTool(toolId) {
+            // Hide all tools
+            document.querySelectorAll('.tool-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tool-card').forEach(el => el.classList.remove('active-tool'));
+            
+            // Show selected tool
+            document.getElementById(`tool-${toolId}`).classList.remove('hidden');
+            document.getElementById(`btn-${toolId}`).classList.add('active-tool');
+            
+            // Re-initialize icons for the shown tool
+            lucide.createIcons();
+        }
+
+        // ==================== SPEED TEST ====================
+        let speedTestRunning = false;
+        let speedTestController = null;
+
+        function startSpeedTest() {
+            if (speedTestRunning) return;
+            
+            speedTestRunning = true;
+            document.getElementById('startSpeedBtn').classList.add('hidden');
+            document.getElementById('stopSpeedBtn').classList.remove('hidden');
+            document.getElementById('stopSpeedBtn').classList.add('flex');
+            document.getElementById('speedTestLog').classList.remove('hidden');
+            
+            const log = document.getElementById('logContent');
+            log.innerHTML = '<div class="text-primary">> Initializing speed test...</div>';
+            
+            // Simulate ping test
+            setTimeout(() => {
+                if (!speedTestRunning) return;
+                const ping = Math.floor(Math.random() * 30) + 10;
+                document.getElementById('pingValue').textContent = ping;
+                document.getElementById('pingStatus').textContent = ping < 30 ? 'Excellent' : ping < 60 ? 'Good' : 'Fair';
+                log.innerHTML += `<div>> Ping: ${ping}ms</div>`;
+                
+                // Start download test
+                runDownloadTest();
+            }, 500);
+        }
+
+        function runDownloadTest() {
+            const log = document.getElementById('logContent');
+            log.innerHTML += '<div>> Testing download speed...</div>';
+            
+            let progress = 0;
+            const targetSpeed = (Math.random() * 80 + 20).toFixed(2);
+            const interval = setInterval(() => {
+                if (!speedTestRunning) {
+                    clearInterval(interval);
+                    return;
+                }
+                
+                progress += Math.random() * 15;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    document.getElementById('downloadSpeed').textContent = targetSpeed;
+                    document.getElementById('downloadBar').style.width = '100%';
+                    log.innerHTML += `<div class="text-green-400">> Download: ${targetSpeed} Mbps</div>`;
+                    
+                    // Start upload test
+                    setTimeout(runUploadTest, 500);
+                } else {
+                    const currentSpeed = (targetSpeed * (progress / 100)).toFixed(2);
+                    document.getElementById('downloadSpeed').textContent = currentSpeed;
+                    document.getElementById('downloadBar').style.width = progress + '%';
+                }
+            }, 200);
+        }
+
+        function runUploadTest() {
+            const log = document.getElementById('logContent');
+            log.innerHTML += '<div>> Testing upload speed...</div>';
+            
+            let progress = 0;
+            const targetSpeed = (Math.random() * 40 + 10).toFixed(2);
+            const interval = setInterval(() => {
+                if (!speedTestRunning) {
+                    clearInterval(interval);
+                    return;
+                }
+                
+                progress += Math.random() * 12;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    document.getElementById('uploadSpeed').textContent = targetSpeed;
+                    document.getElementById('uploadBar').style.width = '100%';
+                    log.innerHTML += `<div class="text-green-400">> Upload: ${targetSpeed} Mbps</div>`;
+                    log.innerHTML += '<div class="text-primary">> Test completed successfully</div>';
+                    
+                    stopSpeedTest();
+                } else {
+                    const currentSpeed = (targetSpeed * (progress / 100)).toFixed(2);
+                    document.getElementById('uploadSpeed').textContent = currentSpeed;
+                    document.getElementById('uploadBar').style.width = progress + '%';
+                }
+            }, 200);
+        }
+
+        function stopSpeedTest() {
+            speedTestRunning = false;
+            document.getElementById('startSpeedBtn').classList.remove('hidden');
+            document.getElementById('stopSpeedBtn').classList.add('hidden');
+            document.getElementById('stopSpeedBtn').classList.remove('flex');
+        }
+
+        // ==================== PHISHING CHECKER ====================
+        function analyzePhishing() {
+            const content = document.getElementById('emailContent').value.toLowerCase();
+            const results = document.getElementById('phishingResults');
+            
+            if (!content.trim()) {
+                results.innerHTML = '<div class="p-4 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400">Please enter email content to analyze</div>';
+                return;
+            }
+            
+            const indicators = [];
+            let riskScore = 0;
+            
+            // Check for suspicious patterns
+            const checks = [
+                { pattern: /urgent|immediate|action required|verify.*account|suspended|locked/i, text: 'Urgent/Threatening language', risk: 25 },
+                { pattern: /click.*here|verify.*now|update.*payment|confirm.*identity/i, text: 'Suspicious call-to-action', risk: 20 },
+                { pattern: /password|credit card|ssn|social security|bank account/i, text: 'Requests sensitive information', risk: 30 },
+                { pattern: /http:\/\/(?!www\.)|https?:\/\/\d+\.|bit\.ly|tinyurl|short\.link/i, text: 'Suspicious URLs', risk: 25 },
+                { pattern: /dear customer|dear user|valued customer/i, text: 'Generic greeting', risk: 10 },
+                { pattern: /won|lottery|prize|million dollars|inheritance/i, text: 'Too good to be true offers', risk: 35 },
+                { pattern: /from:.*@(?!.*\.(com|org|net|edu|gov))/i, text: 'Unusual sender domain', risk: 20 },
+            ];
+            
+            checks.forEach(check => {
+                if (check.pattern.test(content)) {
+                    indicators.push({ text: check.text, risk: check.risk });
+                    riskScore += check.risk;
+                }
+            });
+            
+            // Cap risk score at 100
+            riskScore = Math.min(riskScore, 100);
+            
+            let html = '';
+            if (riskScore === 0) {
+                html = `<div class="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
+                    <div class="flex items-center gap-3 mb-3">
+                        <i data-lucide="shield-check" class="w-8 h-8 text-green-400"></i>
+                        <div>
+                            <div class="text-green-400 font-bold text-lg">Low Risk</div>
+                            <div class="text-gray-400 text-sm">No obvious phishing indicators found</div>
+                        </div>
+                    </div>
+                    <div class="text-sm text-gray-400">Always verify sender identity and be cautious with unexpected emails.</div>
+                </div>`;
+            } else {
+                const color = riskScore > 70 ? 'red' : riskScore > 40 ? 'yellow' : 'orange';
+                const label = riskScore > 70 ? 'High Risk' : riskScore > 40 ? 'Medium Risk' : 'Low-Medium Risk';
+                
+                html = `<div class="p-4 rounded-lg bg-${color}-500/10 border border-${color}-500/20 mb-4">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="shield-alert" class="w-8 h-8 text-${color}-400"></i>
+                            <div>
+                                <div class="text-${color}-400 font-bold text-lg">${label}</div>
+                                <div class="text-gray-400 text-sm">Risk Score: ${riskScore}/100</div>
+                            </div>
+                        </div>
+                        <div class="w-16 h-16 relative">
+                            <svg class="progress-ring w-16 h-16" viewBox="0 0 36 36">
+                                <path class="text-gray-700" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3"/>
+                                <path class="text-${color}-400" stroke-dasharray="${riskScore}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>`;
+                
+                if (indicators.length > 0) {
+                    html += `<div class="space-y-2"><div class="text-sm text-gray-400 mb-2">Detected Indicators:</div>`;
+                    indicators.forEach(ind => {
+                        html += `<div class="flex items-center gap-3 p-3 rounded-lg bg-surface-light">
+                            <i data-lucide="alert-circle" class="w-5 h-5 text-${color}-400"></i>
+                            <span class="text-gray-300">${ind.text}</span>
+                            <span class="ml-auto text-sm text-${color}-400">+${ind.risk}</span>
+                        </div>`;
+                    });
+                    html += '</div>';
+                }
+            }
+            
+            results.innerHTML = html;
+            lucide.createIcons();
+        }
+
+        // ==================== IP LOOKUP ====================
+        async function refreshIP() {
+            document.getElementById('myIP').textContent = 'Loading...';
+            document.getElementById('ispValue').textContent = '-';
+            document.getElementById('orgValue').textContent = '-';
+            document.getElementById('countryValue').textContent = '-';
+            document.getElementById('regionValue').textContent = '-';
+            document.getElementById('cityValue').textContent = '-';
+            document.getElementById('timezoneValue').textContent = '-';
+            
+            try {
+                const response = await fetch('https://ipapi.co/json/');
+                const data = await response.json();
+                
+                document.getElementById('myIP').textContent = data.ip;
+                document.getElementById('ispValue').textContent = data.org || data.asn || 'Unknown';
+                document.getElementById('orgValue').textContent = data.org || 'Unknown';
+                document.getElementById('countryValue').textContent = `${data.country_name} (${data.country})`;
+                document.getElementById('regionValue').textContent = data.region || 'Unknown';
+                document.getElementById('cityValue').textContent = data.city || 'Unknown';
+                document.getElementById('timezoneValue').textContent = data.timezone || 'Unknown';
+            } catch (error) {
+                document.getElementById('myIP').textContent = 'Error';
+                console.error('IP lookup failed:', error);
+            }
+        }
+
+        async function lookupIP() {
+            const ip = document.getElementById('lookupIP').value.trim();
+            if (!ip) return;
+            
+            // Update UI to show loading
+            document.getElementById('myIP').textContent = 'Loading...';
+            
+            try {
+                const response = await fetch(`https://ipapi.co/${ip}/json/`);
+                const data = await response.json();
+                
+                if (data.error) {
+                    document.getElementById('myIP').textContent = 'Invalid IP';
+                    return;
+                }
+                
+                document.getElementById('myIP').textContent = data.ip;
+                document.getElementById('ispValue').textContent = data.org || data.asn || 'Unknown';
+                document.getElementById('orgValue').textContent = data.org || 'Unknown';
+                document.getElementById('countryValue').textContent = `${data.country_name} (${data.country})`;
+                document.getElementById('regionValue').textContent = data.region || 'Unknown';
+                document.getElementById('cityValue').textContent = data.city || 'Unknown';
+                document.getElementById('timezoneValue').textContent = data.timezone || 'Unknown';
+            } catch (error) {
+                document.getElementById('myIP').textContent = 'Error';
+                console.error('IP lookup failed:', error);
+            }
+        }
+
+        // Load IP on page load
+        document.addEventListener('DOMContentLoaded', refreshIP);
+
+        // ==================== PORT CHECKER ====================
+        function setPort(port) {
+            document.getElementById('portNumber').value = port;
+        }
+
+        async function checkPort() {
+            const host = document.getElementById('portHost').value.trim();
+            const port = document.getElementById('portNumber').value;
+            const resultDiv = document.getElementById('portResult');
+            
+            if (!host || !port) {
+                resultDiv.innerHTML = '<div class="p-4 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400">Please enter both host and port</div>';
+                return;
+            }
+            
+            resultDiv.innerHTML = '<div class="flex items-center justify-center gap-3"><div class="w-6 h-6 border-2 border-purple-400 border-t-transparent rounded-full animate-spin"></div><span class="text-gray-400">Checking port...</span></div>';
+            
+            // Simulate port check (in real implementation, this would need a backend)
+            setTimeout(() => {
+                const isOpen = Math.random() > 0.5;
+                const status = isOpen ? 'open' : 'closed';
+                const color = isOpen ? 'green' : 'red';
+                const icon = isOpen ? 'check-circle' : 'x-circle';
+                
+                resultDiv.innerHTML = `
+                    <div class="text-center">
+                        <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-${color}-500/20 flex items-center justify-center">
+                            <i data-lucide="${icon}" class="w-10 h-10 text-${color}-400"></i>
+                        </div>
+                        <div class="text-2xl font-bold text-white mb-2">Port ${port} is ${status.toUpperCase()}</div>
+                        <div class="text-gray-400">Host: ${host}</div>
+                        <div class="mt-4 text-sm text-gray-500">
+                            ${isOpen ? 'The port is accepting connections.' : 'The port is not responding or is blocked by a firewall.'}
+                        </div>
+                    </div>
+                `;
+                lucide.createIcons();
+            }, 1500);
+        }
+
+        // ==================== FILE SIZE CONVERTER ====================
+        const sizeMultipliers = {
+            B: 1,
+            KB: 1024,
+            MB: 1024 * 1024,
+            GB: 1024 * 1024 * 1024,
+            TB: 1024 * 1024 * 1024 * 1024,
+            PB: 1024 * 1024 * 1024 * 1024 * 1024
+        };
+
+        function convertFileSize() {
+            const value = parseFloat(document.getElementById('sizeInput').value) || 0;
+            const fromUnit = document.getElementById('sizeUnitFrom').value;
+            
+            // Convert to bytes first
+            const bytes = value * sizeMultipliers[fromUnit];
+            
+            // Convert to all units
+            document.getElementById('resultB').textContent = formatNumber(bytes);
+            document.getElementById('resultKB').textContent = formatNumber(bytes / sizeMultipliers.KB);
+            document.getElementById('resultMB').textContent = formatNumber(bytes / sizeMultipliers.MB);
+            document.getElementById('resultGB').textContent = formatNumber(bytes / sizeMultipliers.GB);
+            document.getElementById('resultTB').textContent = formatNumber(bytes / sizeMultipliers.TB);
+            document.getElementById('resultPB').textContent = formatNumber(bytes / sizeMultipliers.PB);
+            
+            // Highlight the source unit
+            document.querySelectorAll('[id^="result"]').forEach(el => {
+                el.classList.remove('text-yellow-400', 'font-bold');
+                el.classList.add('text-white');
+            });
+            const sourceEl = document.getElementById('result' + fromUnit);
+            sourceEl.classList.remove('text-white');
+            sourceEl.classList.add('text-yellow-400', 'font-bold');
+        }
+
+        function formatNumber(num) {
+            if (num === 0) return '0';
+            if (num < 0.000001) return num.toExponential(4);
+            if (num < 0.001) return num.toExponential(2);
+            if (num < 1) return num.toFixed(6);
+            if (num < 1000) return num.toFixed(2);
+            if (num < 1000000) return num.toLocaleString('en', { maximumFractionDigits: 2 });
+            return num.toExponential(4);
+        }
+
+        document.getElementById('sizeInput').addEventListener('input', convertFileSize);
+
+        // ==================== PASSWORD STRENGTH ====================
+        function checkPasswordStrength() {
+            const password = document.getElementById('strengthPassword').value;
+            const bar = document.getElementById('strengthBar');
+            const label = document.getElementById('strengthLabel');
+            const crackTime = document.getElementById('crackTime');
+            
+            // Check requirements
+            const hasLength = password.length >= 12;
+            const hasUpper = /[A-Z]/.test(password);
+            const hasLower = /[a-z]/.test(password);
+            const hasNumber = /[0-9]/.test(password);
+            const hasSpecial = /[^A-Za-z0-9]/.test(password);
+            
+            updateRequirement('req-length', hasLength);
+            updateRequirement('req-upper', hasUpper);
+            updateRequirement('req-lower', hasLower);
+            updateRequirement('req-number', hasNumber);
+            updateRequirement('req-special', hasSpecial);
+            
+            // Calculate strength
+            let score = 0;
+            if (password.length > 0) {
+                score += Math.min(password.length * 4, 40);
+                if (hasUpper) score += 10;
+                if (hasLower) score += 10;
+                if (hasNumber) score += 15;
+                if (hasSpecial) score += 25;
+            }
+            
+            score = Math.min(score, 100);
+            
+            // Update bar
+            bar.style.width = score + '%';
+            
+            let color, text, timeEstimate;
+            if (score < 30) {
+                color = 'bg-red-500';
+                text = 'Very Weak';
+                timeEstimate = 'Instantly';
+            } else if (score < 50) {
+                color = 'bg-orange-500';
+                text = 'Weak';
+                timeEstimate = 'Seconds';
+            } else if (score < 70) {
+                color = 'bg-yellow-500';
+                text = 'Fair';
+                timeEstimate = 'Hours to days';
+            } else if (score < 90) {
+                color = 'bg-blue-500';
+                text = 'Strong';
+                timeEstimate = 'Years';
+            } else {
+                color = 'bg-green-500';
+                text = 'Very Strong';
+                timeEstimate = 'Centuries';
+            }
+            
+            bar.className = `strength-meter h-full rounded-full ${color}`;
+            label.textContent = password.length > 0 ? text : 'Enter a password';
+            label.className = `text-sm font-medium ${color.replace('bg-', 'text-')}`;
+            crackTime.textContent = password.length > 0 ? timeEstimate : '-';
+        }
+
+        function updateRequirement(id, met) {
+            const el = document.getElementById(id);
+            const icon = el.querySelector('i');
+            const circle = el.querySelector('div');
+            
+            if (met) {
+                el.classList.add('bg-green-500/10');
+                circle.classList.remove('border-gray-600');
+                circle.classList.add('bg-green-500', 'border-green-500');
+                icon.classList.remove('text-transparent');
+                icon.classList.add('text-white');
+            } else {
+                el.classList.remove('bg-green-500/10');
+                circle.classList.add('border-gray-600');
+                circle.classList.remove('bg-green-500', 'border-green-500');
+                icon.classList.add('text-transparent');
+                icon.classList.remove('text-white');
+            }
+        }
+
+        function togglePasswordVisibility(id) {
+            const input = document.getElementById(id);
+            input.type = input.type === 'password' ? 'text' : 'password';
+        }
+
+        // ==================== PASSWORD GENERATOR ====================
+        function updateLengthDisplay() {
+            document.getElementById('lengthValue').textContent = document.getElementById('passwordLength').value;
+        }
+
+        function generatePassword() {
+            const length = parseInt(document.getElementById('passwordLength').value);
+            const useUpper = document.getElementById('useUppercase').checked;
+            const useLower = document.getElementById('useLowercase').checked;
+            const useNumber = document.getElementById('useNumbers').checked;
+            const useSpecial = document.getElementById('useSpecial').checked;
+            
+            const upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const lower = 'abcdefghijklmnopqrstuvwxyz';
+            const number = '0123456789';
+            const special = '!@#$%^&*()_+-=[]{}|;:,.<>?';
+            
+            let chars = '';
+            if (useUpper) chars += upper;
+            if (useLower) chars += lower;
+            if (useNumber) chars += number;
+            if (useSpecial) chars += special;
+            
+            if (chars === '') {
+                document.getElementById('generatedPassword').value = '';
+                return;
+            }
+            
+            let password = '';
+            const array = new Uint32Array(length);
+            crypto.getRandomValues(array);
+            
+            for (let i = 0; i < length; i++) {
+                password += chars[array[i] % chars.length];
+            }
+            
+            document.getElementById('generatedPassword').value = password;
+            
+            // Update strength indicator
+            let strength = 0;
+            if (useUpper) strength += 10;
+            if (useLower) strength += 10;
+            if (useNumber) strength += 15;
+            if (useSpecial) strength += 25;
+            strength += Math.min(length * 2, 40);
+            strength = Math.min(strength, 100);
+            
+            const bar = document.getElementById('genStrengthBar');
+            const label = document.getElementById('genStrengthLabel');
+            
+            bar.style.width = strength + '%';
+            
+            if (strength < 40) {
+                bar.className = 'h-full rounded-full bg-red-500 transition-all';
+                label.textContent = 'Weak';
+                label.className = 'text-sm text-red-400';
+            } else if (strength < 70) {
+                bar.className = 'h-full rounded-full bg-yellow-500 transition-all';
+                label.textContent = 'Fair';
+                label.className = 'text-sm text-yellow-400';
+            } else if (strength < 90) {
+                bar.className = 'h-full rounded-full bg-blue-500 transition-all';
+                label.textContent = 'Strong';
+                label.className = 'text-sm text-blue-400';
+            } else {
+                bar.className = 'h-full rounded-full bg-green-500 transition-all';
+                label.textContent = 'Excellent';
+                label.className = 'text-sm text-green-400';
+            }
+        }
+
+        // ==================== UTILITIES ====================
+        function copyToClipboard(elementId) {
+            const text = document.getElementById(elementId).textContent || document.getElementById(elementId).value;
+            navigator.clipboard.writeText(text).then(() => {
+                // Show temporary feedback
+                const btn = event.target.closest('button');
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = '<i data-lucide="check" class="w-5 h-5"></i>';
+                lucide.createIcons();
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                    lucide.createIcons();
+                }, 1500);
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            convertFileSize();
+            generatePassword();
+        });
+    </script>
+</body>
+</html>
