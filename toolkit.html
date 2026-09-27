@@ -334,6 +334,10 @@
                         </button>
                     </div>
 
+                    <div class="mt-4 text-center text-xs text-gray-500 max-w-2xl mx-auto">
+                        Real network test using Cloudflare edge measurement servers. Fast connections may transfer several hundred MB while the test ramps up to full speed.
+                    </div>
+
                     <div id="speedTestLog" class="mt-6 p-4 rounded-lg bg-surface-light font-mono text-sm text-gray-400 hidden">
                         <div class="flex items-center gap-2 mb-2">
                             <i data-lucide="terminal" class="w-4 h-4 text-primary"></i>
@@ -816,98 +820,204 @@
 
         // ==================== SPEED TEST ====================
         let speedTestRunning = false;
-        let speedTestController = null;
+        let speedTestEngine = null;
+        let speedTestModulePromise = null;
+        let speedTestRunId = 0;
 
-        function startSpeedTest() {
+        function setSpeedTestButtons(running) {
+            const startBtn = document.getElementById('startSpeedBtn');
+            const stopBtn = document.getElementById('stopSpeedBtn');
+
+            if (running) {
+                startBtn.classList.add('hidden');
+                stopBtn.classList.remove('hidden');
+                stopBtn.classList.add('flex');
+            } else {
+                startBtn.classList.remove('hidden');
+                stopBtn.classList.add('hidden');
+                stopBtn.classList.remove('flex');
+            }
+        }
+
+        function appendSpeedLog(message, className = '') {
+            const log = document.getElementById('logContent');
+            const line = document.createElement('div');
+            if (className) line.className = className;
+            line.textContent = '> ' + message;
+            log.appendChild(line);
+        }
+
+        function formatMbps(bps) {
+            const mbps = bps / 1000000;
+            if (mbps >= 1000) return mbps.toFixed(0);
+            if (mbps >= 100) return mbps.toFixed(1);
+            return mbps.toFixed(2);
+        }
+
+        function updateSpeedResults(results) {
+            try {
+                const downloadBps = results.getDownloadBandwidth();
+                if (Number.isFinite(downloadBps) && downloadBps > 0) {
+                    const mbps = downloadBps / 1000000;
+                    document.getElementById('downloadSpeed').textContent = formatMbps(downloadBps);
+                    document.getElementById('downloadBar').style.width = Math.min(100, Math.max(4, mbps / 10)) + '%';
+                }
+            } catch (e) {}
+
+            try {
+                const uploadBps = results.getUploadBandwidth();
+                if (Number.isFinite(uploadBps) && uploadBps > 0) {
+                    const mbps = uploadBps / 1000000;
+                    document.getElementById('uploadSpeed').textContent = formatMbps(uploadBps);
+                    document.getElementById('uploadBar').style.width = Math.min(100, Math.max(4, mbps / 10)) + '%';
+                }
+            } catch (e) {}
+
+            try {
+                const latency = results.getUnloadedLatency();
+                if (Number.isFinite(latency) && latency >= 0) {
+                    document.getElementById('pingValue').textContent = latency.toFixed(latency < 10 ? 1 : 0);
+                    document.getElementById('pingStatus').textContent =
+                        latency < 20 ? 'Excellent' :
+                        latency < 40 ? 'Good' :
+                        latency < 80 ? 'Fair' : 'High latency';
+                }
+            } catch (e) {}
+        }
+
+        async function startSpeedTest() {
             if (speedTestRunning) return;
-            
+
+            const runId = ++speedTestRunId;
             speedTestRunning = true;
-            document.getElementById('startSpeedBtn').classList.add('hidden');
-            document.getElementById('stopSpeedBtn').classList.remove('hidden');
-            document.getElementById('stopSpeedBtn').classList.add('flex');
+            setSpeedTestButtons(true);
+
+            document.getElementById('downloadSpeed').textContent = '0.00';
+            document.getElementById('uploadSpeed').textContent = '0.00';
+            document.getElementById('pingValue').textContent = '0';
+            document.getElementById('downloadBar').style.width = '0%';
+            document.getElementById('uploadBar').style.width = '0%';
+            document.getElementById('pingStatus').textContent = 'Testing...';
+
             document.getElementById('speedTestLog').classList.remove('hidden');
-            
-            const log = document.getElementById('logContent');
-            log.innerHTML = '<div class="text-primary">> Initializing speed test...</div>';
-            
-            // Simulate ping test
-            setTimeout(() => {
-                if (!speedTestRunning) return;
-                const ping = Math.floor(Math.random() * 30) + 10;
-                document.getElementById('pingValue').textContent = ping;
-                document.getElementById('pingStatus').textContent = ping < 30 ? 'Excellent' : ping < 60 ? 'Good' : 'Fair';
-                log.innerHTML += `<div>> Ping: ${ping}ms</div>`;
-                
-                // Start download test
-                runDownloadTest();
-            }, 500);
-        }
+            document.getElementById('logContent').innerHTML = '';
+            appendSpeedLog('Loading real speed-test engine...');
 
-        function runDownloadTest() {
-            const log = document.getElementById('logContent');
-            log.innerHTML += '<div>> Testing download speed...</div>';
-            
-            let progress = 0;
-            const targetSpeed = (Math.random() * 80 + 20).toFixed(2);
-            const interval = setInterval(() => {
-                if (!speedTestRunning) {
-                    clearInterval(interval);
-                    return;
+            try {
+                if (!speedTestModulePromise) {
+                    speedTestModulePromise = import('https://unpkg.com/@cloudflare/speedtest@1.13.1/dist/speedtest.js');
                 }
-                
-                progress += Math.random() * 15;
-                if (progress >= 100) {
-                    progress = 100;
-                    clearInterval(interval);
-                    document.getElementById('downloadSpeed').textContent = targetSpeed;
-                    document.getElementById('downloadBar').style.width = '100%';
-                    log.innerHTML += `<div class="text-green-400">> Download: ${targetSpeed} Mbps</div>`;
-                    
-                    // Start upload test
-                    setTimeout(runUploadTest, 500);
-                } else {
-                    const currentSpeed = (targetSpeed * (progress / 100)).toFixed(2);
-                    document.getElementById('downloadSpeed').textContent = currentSpeed;
-                    document.getElementById('downloadBar').style.width = progress + '%';
-                }
-            }, 200);
-        }
 
-        function runUploadTest() {
-            const log = document.getElementById('logContent');
-            log.innerHTML += '<div>> Testing upload speed...</div>';
-            
-            let progress = 0;
-            const targetSpeed = (Math.random() * 40 + 10).toFixed(2);
-            const interval = setInterval(() => {
-                if (!speedTestRunning) {
-                    clearInterval(interval);
-                    return;
-                }
-                
-                progress += Math.random() * 12;
-                if (progress >= 100) {
-                    progress = 100;
-                    clearInterval(interval);
-                    document.getElementById('uploadSpeed').textContent = targetSpeed;
-                    document.getElementById('uploadBar').style.width = '100%';
-                    log.innerHTML += `<div class="text-green-400">> Upload: ${targetSpeed} Mbps</div>`;
-                    log.innerHTML += '<div class="text-primary">> Test completed successfully</div>';
-                    
-                    stopSpeedTest();
-                } else {
-                    const currentSpeed = (targetSpeed * (progress / 100)).toFixed(2);
-                    document.getElementById('uploadSpeed').textContent = currentSpeed;
-                    document.getElementById('uploadBar').style.width = progress + '%';
-                }
-            }, 200);
+                const module = await speedTestModulePromise;
+                if (!speedTestRunning || runId !== speedTestRunId) return;
+
+                const SpeedTest = module.default;
+                let lastPhase = '';
+
+                speedTestEngine = new SpeedTest({
+                    autoStart: false,
+
+                    // Require a longer sustained transfer before accepting a result.
+                    // This gives fast cable/fiber connections time to ramp up.
+                    bandwidthFinishRequestDuration: 2500,
+
+                    // We only display idle ping, download, and upload in this UI.
+                    measureDownloadLoadedLatency: false,
+                    measureUploadLoadedLatency: false,
+
+                    // Cloudflare-style progressive ramp-up, without packet-loss testing.
+                    measurements: [
+                        { type: 'latency', numPackets: 1 },
+                        { type: 'download', bytes: 1e5, count: 1, bypassMinDuration: true },
+                        { type: 'latency', numPackets: 12 },
+                        { type: 'download', bytes: 1e5, count: 6 },
+                        { type: 'download', bytes: 1e6, count: 6 },
+                        { type: 'upload', bytes: 1e5, count: 6 },
+                        { type: 'upload', bytes: 1e6, count: 5 },
+                        { type: 'download', bytes: 1e7, count: 5 },
+                        { type: 'upload', bytes: 1e7, count: 4 },
+                        { type: 'download', bytes: 2.5e7, count: 4 },
+                        { type: 'upload', bytes: 2.5e7, count: 3 },
+                        { type: 'download', bytes: 1e8, count: 3 },
+                        { type: 'upload', bytes: 5e7, count: 3 },
+                        { type: 'download', bytes: 2.5e8, count: 2 }
+                    ]
+                });
+
+                speedTestEngine.onResultsChange = ({ type }) => {
+                    if (!speedTestRunning || runId !== speedTestRunId) return;
+
+                    updateSpeedResults(speedTestEngine.results);
+
+                    if (type && type !== lastPhase) {
+                        lastPhase = type;
+                        if (type === 'latency') appendSpeedLog('Measuring latency...');
+                        if (type === 'download') appendSpeedLog('Download ramp-up in progress...');
+                        if (type === 'upload') appendSpeedLog('Upload ramp-up in progress...');
+                    }
+                };
+
+                speedTestEngine.onFinish = results => {
+                    if (runId !== speedTestRunId) return;
+
+                    updateSpeedResults(results);
+
+                    let down = null;
+                    let up = null;
+                    let ping = null;
+                    try { down = results.getDownloadBandwidth(); } catch (e) {}
+                    try { up = results.getUploadBandwidth(); } catch (e) {}
+                    try { ping = results.getUnloadedLatency(); } catch (e) {}
+
+                    if (Number.isFinite(ping)) appendSpeedLog('Ping: ' + ping.toFixed(ping < 10 ? 1 : 0) + ' ms', 'text-primary');
+                    if (Number.isFinite(down)) appendSpeedLog('Download: ' + formatMbps(down) + ' Mbps', 'text-green-400');
+                    if (Number.isFinite(up)) appendSpeedLog('Upload: ' + formatMbps(up) + ' Mbps', 'text-green-400');
+
+                    try {
+                        const duration = results.getTotalDurationMs();
+                        if (Number.isFinite(duration)) appendSpeedLog('Completed in ' + (duration / 1000).toFixed(1) + ' seconds');
+                    } catch (e) {}
+
+                    appendSpeedLog('Test completed successfully', 'text-primary');
+                    speedTestRunning = false;
+                    speedTestEngine = null;
+                    setSpeedTestButtons(false);
+                };
+
+                speedTestEngine.onError = error => {
+                    if (runId !== speedTestRunId) return;
+                    appendSpeedLog('Measurement warning: ' + String(error), 'text-yellow-400');
+                };
+
+                appendSpeedLog('Testing against Cloudflare edge servers...');
+                speedTestEngine.play();
+
+            } catch (error) {
+                if (runId !== speedTestRunId) return;
+
+                console.error('Speed test failed:', error);
+                appendSpeedLog('Unable to start the real speed test. Check browser privacy/ad-blocking settings and try again.', 'text-red-400');
+                document.getElementById('pingStatus').textContent = 'Test unavailable';
+                speedTestRunning = false;
+                speedTestEngine = null;
+                setSpeedTestButtons(false);
+            }
         }
 
         function stopSpeedTest() {
+            if (!speedTestRunning) return;
+
             speedTestRunning = false;
-            document.getElementById('startSpeedBtn').classList.remove('hidden');
-            document.getElementById('stopSpeedBtn').classList.add('hidden');
-            document.getElementById('stopSpeedBtn').classList.remove('flex');
+            ++speedTestRunId;
+
+            if (speedTestEngine) {
+                try { speedTestEngine.pause(); } catch (e) {}
+                speedTestEngine = null;
+            }
+
+            appendSpeedLog('Test stopped by user');
+            document.getElementById('pingStatus').textContent = 'Test stopped';
+            setSpeedTestButtons(false);
         }
 
         // ==================== PHISHING CHECKER ====================
