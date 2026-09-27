@@ -126,6 +126,10 @@
             transition: width 0.5s ease;
         }
 
+        #toolArea {
+            scroll-margin-top: 88px;
+        }
+
         .kt-logo {
             height: 48px;
             width: auto;
@@ -798,6 +802,16 @@
             
             // Re-initialize icons for the shown tool
             lucide.createIcons();
+
+            // On phones/tablets, bring the selected tool into view immediately.
+            if (window.matchMedia('(max-width: 767px)').matches) {
+                requestAnimationFrame(() => {
+                    document.getElementById('toolArea').scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                });
+            }
         }
 
         // ==================== SPEED TEST ====================
