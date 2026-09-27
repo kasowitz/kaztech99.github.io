@@ -1207,21 +1207,30 @@
 
         function updateRequirement(id, met) {
             const el = document.getElementById(id);
-            const icon = el.querySelector('i');
+            if (!el) return;
+
+            // Lucide replaces the original <i> element with an <svg>,
+            // so support either form.
+            const icon = el.querySelector('svg, i');
             const circle = el.querySelector('div');
+            if (!circle) return;
             
             if (met) {
                 el.classList.add('bg-green-500/10');
                 circle.classList.remove('border-gray-600');
                 circle.classList.add('bg-green-500', 'border-green-500');
-                icon.classList.remove('text-transparent');
-                icon.classList.add('text-white');
+                if (icon) {
+                    icon.classList.remove('text-transparent');
+                    icon.classList.add('text-white');
+                }
             } else {
                 el.classList.remove('bg-green-500/10');
                 circle.classList.add('border-gray-600');
                 circle.classList.remove('bg-green-500', 'border-green-500');
-                icon.classList.add('text-transparent');
-                icon.classList.remove('text-white');
+                if (icon) {
+                    icon.classList.add('text-transparent');
+                    icon.classList.remove('text-white');
+                }
             }
         }
 
