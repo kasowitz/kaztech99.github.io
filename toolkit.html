@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IT Toolkit | KazTech</title>
+    <link rel="icon" type="image/png" href="KT1.png">
+    <meta name="theme-color" content="#00b3ff">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,15 +16,15 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#00d4aa',
-                        secondary: '#0891b2',
-                        dark: '#0a0a0f',
-                        darker: '#050508',
-                        surface: '#12121a',
-                        'surface-light': '#1a1a25',
+                        primary: '#00b3ff',
+                        secondary: '#6ee7ff',
+                        dark: '#06070a',
+                        darker: '#030407',
+                        surface: '#0b0f16',
+                        'surface-light': '#101721',
                     },
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
+                        sans: ['ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'Arial', 'sans-serif'],
                         mono: ['JetBrains Mono', 'monospace'],
                     },
                 }
@@ -30,54 +32,137 @@
         }
     </script>
     <style>
+        :root {
+            --kt-bg: #06070a;
+            --kt-panel: #0b0f16;
+            --kt-panel-light: #101721;
+            --kt-blue: #00b3ff;
+            --kt-cyan: #6ee7ff;
+            --kt-text: #e6f1ff;
+            --kt-muted: #93a4be;
+            --kt-line: rgba(110, 231, 255, 0.16);
+            --kt-glow: 0 0 32px rgba(0,179,255,.24), 0 0 64px rgba(0,179,255,.12);
+        }
+
+        html {
+            min-height: 100%;
+            background:
+                radial-gradient(1200px 800px at 80% -10%, rgba(14,165,255,.12), transparent 60%),
+                radial-gradient(1000px 600px at -10% 120%, rgba(0,179,255,.14), transparent 60%),
+                var(--kt-bg);
+            background-attachment: fixed;
+        }
+
         body {
-            background: linear-gradient(135deg, #0a0a0f 0%, #12121a 50%, #0a0a0f 100%);
+            background: transparent;
             min-height: 100vh;
+            color: var(--kt-text);
         }
+
         .glass {
-            background: rgba(18, 18, 26, 0.8);
+            background: linear-gradient(180deg, rgba(11,15,22,.88), rgba(6,7,10,.82));
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(0, 212, 170, 0.1);
+            border: 1px solid rgba(255,255,255,.08);
         }
+
+        nav.glass {
+            background: rgba(6,7,10,.88);
+            border-bottom: 1px solid rgba(110,231,255,.12);
+            box-shadow: 0 10px 30px rgba(0,0,0,.22);
+        }
+
         .glow {
-            box-shadow: 0 0 30px rgba(0, 212, 170, 0.15);
+            box-shadow: var(--kt-glow);
         }
+
         .glow-hover:hover {
-            box-shadow: 0 0 40px rgba(0, 212, 170, 0.25);
+            box-shadow: 0 12px 34px rgba(0,179,255,.16), 0 0 34px rgba(0,179,255,.10);
         }
+
         .text-glow {
-            text-shadow: 0 0 20px rgba(0, 212, 170, 0.5);
+            text-shadow: 0 0 24px rgba(0,179,255,.45);
         }
+
         .grid-pattern {
-            background-image: radial-gradient(rgba(0, 212, 170, 0.1) 1px, transparent 1px);
+            background-image: radial-gradient(rgba(0,179,255,.10) 1px, transparent 1px);
             background-size: 30px 30px;
+            mask-image: linear-gradient(to bottom, black, transparent 88%);
         }
+
         .tool-card {
-            transition: all 0.3s ease;
+            transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease, background .25s ease;
         }
+
         .tool-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(0, 212, 170, 0.3);
+            transform: translateY(-3px);
+            border-color: rgba(110,231,255,.28);
+            background: linear-gradient(180deg, rgba(14,165,255,.055), rgba(6,7,10,.88));
         }
+
         .active-tool {
-            border-color: #00d4aa;
-            box-shadow: 0 0 30px rgba(0, 212, 170, 0.2);
+            border-color: rgba(0,179,255,.65);
+            box-shadow: 0 0 0 1px rgba(0,179,255,.10), 0 0 30px rgba(0,179,255,.18);
+            background: linear-gradient(180deg, rgba(0,179,255,.08), rgba(6,7,10,.90));
         }
+
         .progress-ring {
             transform: rotate(-90deg);
         }
+
         .strength-meter {
             transition: all 0.3s ease;
         }
+
         @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 20px rgba(0, 212, 170, 0.3); }
-            50% { box-shadow: 0 0 40px rgba(0, 212, 170, 0.5); }
+            0%, 100% { box-shadow: 0 0 20px rgba(0,179,255,.22); }
+            50% { box-shadow: 0 0 42px rgba(0,179,255,.38); }
         }
+
         .animate-pulse-glow {
             animation: pulse-glow 2s ease-in-out infinite;
         }
+
         .speed-bar {
             transition: width 0.5s ease;
+        }
+
+        .kt-logo {
+            height: 48px;
+            width: auto;
+            display: block;
+            filter: drop-shadow(0 0 18px rgba(0,179,255,.20));
+        }
+
+        .kt-brand-name {
+            color: var(--kt-text);
+            font-weight: 800;
+            letter-spacing: .2px;
+            line-height: 1;
+            font-size: 1.18rem;
+        }
+
+        .kt-brand-tag {
+            color: var(--kt-muted);
+            font-size: .72rem;
+            line-height: 1.2;
+            margin-top: 4px;
+        }
+
+        .kt-toolkit-label {
+            color: var(--kt-blue);
+            font-size: .78rem;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        input, textarea, select {
+            accent-color: var(--kt-blue);
+        }
+
+        ::selection {
+            background: rgba(0,179,255,.30);
+            color: white;
         }
     </style>
 </head>
@@ -86,24 +171,24 @@
     <nav class="fixed top-0 left-0 right-0 z-50 glass">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
-                        <i data-lucide="terminal" class="w-5 h-5 text-white"></i>
-                    </div>
+                <a href="/" class="flex items-center gap-3 no-underline" aria-label="KazTech home">
+                    <img src="KT1.png" alt="KazTech logo" class="kt-logo">
                     <div>
-                        <span class="text-white font-bold text-lg">KazTech</span>
-                        <span class="text-primary text-sm ml-2">IT Toolkit</span>
+                        <div class="kt-brand-name">KazTech</div>
+                        <div class="kt-brand-tag">IT Support &amp; Consulting</div>
                     </div>
-                </div>
+                    <div class="hidden sm:block h-8 w-px bg-white/10 mx-1"></div>
+                    <span class="hidden sm:inline kt-toolkit-label">IT Toolkit</span>
+                </a>
                 <div class="hidden md:flex items-center gap-6">
-                    <a href="https://kaztech99.com" class="text-gray-400 hover:text-primary transition-colors flex items-center gap-2">
+                    <a href="/" class="text-gray-400 hover:text-primary transition-colors flex items-center gap-2">
                         <i data-lucide="arrow-left" class="w-4 h-4"></i>
                         Back to Main Site
                     </a>
                 </div>
-                <button id="mobileMenuBtn" class="md:hidden text-gray-400 hover:text-white">
-                    <i data-lucide="menu" class="w-6 h-6"></i>
-                </button>
+                <a href="/" class="md:hidden text-gray-400 hover:text-primary transition-colors" aria-label="Back to main site">
+                    <i data-lucide="arrow-left" class="w-6 h-6"></i>
+                </a>
             </div>
         </div>
     </nav>
@@ -121,7 +206,7 @@
                     IT <span class="text-primary text-glow">Toolkit</span>
                 </h1>
                 <p class="text-gray-400 text-lg max-w-2xl mx-auto">
-                    Professional-grade utilities for network diagnostics, security analysis, and system administration. All tools run client-side for maximum privacy.
+                    Practical browser-based utilities for network diagnostics, security checks, password tools, and everyday IT troubleshooting. Built by KazTech, with client-side processing wherever possible.
                 </p>
             </div>
         </div>
@@ -679,24 +764,26 @@
     </section>
 
     <!-- Footer -->
-    <footer class="py-8 px-4 sm:px-6 lg:px-8 border-t border-gray-800">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+    <footer class="py-8 px-4 sm:px-6 lg:px-8 border-t border-white/10">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-5">
             <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
-                    <i data-lucide="terminal" class="w-4 h-4 text-white"></i>
+                <img src="KT1.png" alt="" class="w-9 h-auto">
+                <div>
+                    <div class="text-gray-300 text-sm">© <span id="toolkitYear"></span> KazTech. Turning it off and on since 1999.</div>
+                    <div class="text-gray-500 text-xs mt-1">IT Toolkit • Browser-based troubleshooting utilities</div>
                 </div>
-                <span class="text-gray-400 text-sm">© 2024 KazTech. All tools run client-side.</span>
             </div>
             <div class="flex items-center gap-6">
-                <a href="https://kaztech99.com" class="text-gray-400 hover:text-primary transition-colors text-sm">Main Site</a>
-                <a href="#" class="text-gray-400 hover:text-primary transition-colors text-sm">Privacy</a>
-                <a href="#" class="text-gray-400 hover:text-primary transition-colors text-sm">Terms</a>
+                <a href="/" class="text-gray-400 hover:text-primary transition-colors text-sm">Main Site</a>
+                <a href="/pricing.html" class="text-gray-400 hover:text-primary transition-colors text-sm">Pricing</a>
+                <a href="/contact.html" class="text-gray-400 hover:text-primary transition-colors text-sm">Contact</a>
             </div>
         </div>
     </footer>
 
     <script>
-        // Initialize Lucide icons
+        // Initialize page chrome and Lucide icons
+        document.getElementById('toolkitYear').textContent = new Date().getFullYear();
         lucide.createIcons();
 
         // Tool switching
