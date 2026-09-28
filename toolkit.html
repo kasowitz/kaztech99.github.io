@@ -204,7 +204,7 @@
             <div class="text-center">
                 <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-6">
                     <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                    <span class="text-primary text-sm font-medium">7 Essential Tools</span>
+                    <span class="text-primary text-sm font-medium">8 Essential Tools</span>
                 </div>
                 <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">
                     IT <span class="text-primary text-glow">Toolkit</span>
@@ -235,6 +235,14 @@
                     </div>
                     <h3 class="text-white font-semibold mb-1">Phishing Checker</h3>
                     <p class="text-sm text-gray-500">Identify suspicious emails</p>
+                </button>
+
+                <button onclick="showTool('urlchecker')" id="btn-urlchecker" class="tool-card glass rounded-xl p-6 text-left glow-hover">
+                    <div class="w-12 h-12 rounded-lg bg-cyan-500/10 flex items-center justify-center mb-4">
+                        <i data-lucide="shield-question" class="w-6 h-6 text-cyan-400"></i>
+                    </div>
+                    <h3 class="text-white font-semibold mb-1">URL Checker</h3>
+                    <p class="text-sm text-gray-500">Is this link safe?</p>
                 </button>
 
                 <button onclick="showTool('iplookup')" id="btn-iplookup" class="tool-card glass rounded-xl p-6 text-left glow-hover">
@@ -355,42 +363,79 @@
                         </div>
                         <div>
                             <h2 class="text-xl font-bold text-white">Phishing Email Checker</h2>
-                            <p class="text-sm text-gray-500">Analyze emails for suspicious indicators</p>
+                            <p class="text-sm text-gray-500">Analyze email text, headers, authentication results, sender domains, and links</p>
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <div>
-                            <label class="block text-sm font-medium text-gray-400 mb-2">Paste email headers or content</label>
-                            <textarea id="emailContent" rows="12" class="w-full px-4 py-3 rounded-lg bg-surface-light border border-gray-700 text-white placeholder-gray-500 focus:border-primary focus:outline-none font-mono text-sm" placeholder="From: sender@example.com&#10;To: victim@company.com&#10;Subject: Urgent: Verify Your Account&#10;..."></textarea>
+                            <label class="block text-sm font-medium text-gray-400 mb-2">Paste the email, preferably including headers</label>
+                            <textarea id="emailContent" rows="14" class="w-full px-4 py-3 rounded-lg bg-surface-light border border-gray-700 text-white placeholder-gray-500 focus:border-primary focus:outline-none font-mono text-sm" placeholder="From: Example Support <support@example.com>&#10;Reply-To: someone@another-domain.com&#10;Authentication-Results: ...&#10;Subject: Action required&#10;&#10;Paste the message body here..."></textarea>
                             <button onclick="analyzePhishing()" class="mt-4 w-full px-6 py-3 bg-red-500/20 hover:bg-red-500/30 text-red-400 font-semibold rounded-lg transition-all flex items-center justify-center gap-2">
                                 <i data-lucide="scan-search" class="w-5 h-5"></i>
-                                Analyze for Phishing
+                                Analyze Email
                             </button>
                         </div>
                         <div>
                             <div id="phishingResults" class="space-y-3">
                                 <div class="p-4 rounded-lg bg-surface-light text-center text-gray-500">
                                     <i data-lucide="shield-question" class="w-12 h-12 mx-auto mb-3 opacity-50"></i>
-                                    <p>Enter email content and click analyze to check for phishing indicators</p>
+                                    <p>Paste an email and click Analyze Email.</p>
+                                    <p class="text-xs mt-2">Including full headers allows stronger checks such as SPF, DKIM, DMARC and Reply-To mismatches.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="mt-6 p-4 rounded-lg bg-yellow-500/10 border border-yellow-500/20">
+                    <div class="mt-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                         <div class="flex items-start gap-3">
-                            <i data-lucide="alert-triangle" class="w-5 h-5 text-yellow-400 flex-shrink-0 mt-0.5"></i>
-                            <div>
-                                <h4 class="text-yellow-400 font-medium mb-1">Common Phishing Red Flags</h4>
-                                <ul class="text-sm text-gray-400 space-y-1">
-                                    <li>• Urgent or threatening language</li>
-                                    <li>• Suspicious sender addresses</li>
-                                    <li>• Requests for passwords or sensitive data</li>
-                                    <li>• Mismatched or deceptive links</li>
-                                    <li>• Poor grammar and spelling</li>
-                                    <li>• Generic greetings</li>
-                                </ul>
+                            <i data-lucide="info" class="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5"></i>
+                            <div class="text-sm text-gray-400">
+                                <span class="text-blue-300 font-medium">Heuristic analysis:</span>
+                                this checker looks for suspicious characteristics; it cannot prove an email is safe or malicious. If the message contains a link, use the separate URL Checker for a live reputation lookup.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- URL Checker Tool -->
+                <div id="tool-urlchecker" class="tool-content hidden">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-lg bg-cyan-500/10 flex items-center justify-center">
+                            <i data-lucide="shield-question" class="w-5 h-5 text-cyan-400"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-bold text-white">URL Checker — Is it Safe?</h2>
+                            <p class="text-sm text-gray-500">Inspect a suspicious link without opening the destination</p>
+                        </div>
+                    </div>
+
+                    <div class="max-w-3xl mx-auto">
+                        <label class="block text-sm font-medium text-gray-400 mb-2">Paste a URL or domain</label>
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <input id="urlCheckInput" type="text" inputmode="url" autocomplete="off" spellcheck="false"
+                                class="flex-1 px-4 py-3 rounded-lg bg-surface-light border border-gray-700 text-white placeholder-gray-500 focus:border-primary focus:outline-none font-mono text-sm"
+                                placeholder="https://example.com/login">
+                            <button onclick="checkUrlSafety()" id="urlCheckBtn"
+                                class="px-6 py-3 bg-primary hover:bg-primary/80 text-dark font-semibold rounded-lg transition-all flex items-center justify-center gap-2">
+                                <i data-lucide="search" class="w-5 h-5"></i>
+                                Check URL
+                            </button>
+                        </div>
+
+                        <div id="urlCheckResults" class="mt-6">
+                            <div class="p-5 rounded-xl bg-surface-light text-center text-gray-500">
+                                <i data-lucide="link" class="w-10 h-10 mx-auto mb-3 opacity-50"></i>
+                                <p>Paste a suspicious link above. The checker analyzes the URL text and, when configured, checks Google Web Risk.</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 p-4 rounded-lg bg-yellow-500/10 border border-yellow-500/20">
+                            <div class="flex items-start gap-3">
+                                <i data-lucide="triangle-alert" class="w-5 h-5 text-yellow-400 flex-shrink-0 mt-0.5"></i>
+                                <div class="text-sm text-gray-400">
+                                    A clean result is not a guarantee of safety. Threat intelligence can have false positives and false negatives, and brand-new malicious sites may not be listed yet. This tool never intentionally opens the submitted destination URL.
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1233,89 +1278,420 @@
             setSpeedTestButtons(false);
         }
 
-        // ==================== PHISHING CHECKER ====================
+        // ==================== PHISHING + URL CHECKERS ====================
+        let lastPhishingUrls = [];
+
+        function escapeToolkitHtml(value) {
+            return String(value)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function normalizeUrlInput(raw) {
+            let value = String(raw || '').trim();
+            if (!value) throw new Error('Enter a URL to check.');
+
+            // Accept a bare domain while limiting checks to normal web URLs.
+            if (!/^[a-z][a-z0-9+.-]*:\/\//i.test(value)) {
+                value = 'https://' + value;
+            }
+
+            const parsed = new URL(value);
+            if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+                throw new Error('Only HTTP and HTTPS URLs can be checked.');
+            }
+            return parsed;
+        }
+
+        function getRegistrableHint(hostname) {
+            const parts = hostname.toLowerCase().split('.').filter(Boolean);
+            return parts.length >= 2 ? parts.slice(-2).join('.') : hostname.toLowerCase();
+        }
+
+        function isIpHostname(hostname) {
+            return /^(?:\d{1,3}\.){3}\d{1,3}$/.test(hostname) || hostname.includes(':');
+        }
+
+        function inspectUrlLocally(raw) {
+            const parsed = normalizeUrlInput(raw);
+            const hostname = parsed.hostname.toLowerCase();
+            const findings = [];
+            let score = 0;
+
+            function add(text, points, severity) {
+                findings.push({ text: text, points: points, severity: severity || 'caution' });
+                score += points;
+            }
+
+            const shorteners = [
+                'bit.ly','tinyurl.com','t.co','goo.gl','ow.ly','buff.ly',
+                'is.gd','rebrand.ly','cutt.ly','shorturl.at','tiny.cc'
+            ];
+
+            if (parsed.protocol === 'http:') {
+                add('Uses unencrypted HTTP rather than HTTPS', 8, 'caution');
+            }
+
+            if (isIpHostname(hostname)) {
+                add('Uses an IP address instead of a normal domain name', 30, 'high');
+            }
+
+            if (hostname.includes('xn--')) {
+                add('Contains Punycode, which can be used for look-alike domains', 25, 'high');
+            }
+
+            if (parsed.username || parsed.password) {
+                add('Contains username/password information before the hostname', 35, 'high');
+            }
+
+            if (shorteners.some(domain => hostname === domain || hostname.endsWith('.' + domain))) {
+                add('Uses a URL-shortening service that hides the final destination', 20, 'medium');
+            }
+
+            const labels = hostname.split('.').filter(Boolean);
+            if (labels.length >= 5) {
+                add('Uses an unusually deep subdomain structure', 12, 'medium');
+            }
+
+            if (hostname.length > 55) {
+                add('Hostname is unusually long', 10, 'medium');
+            }
+
+            if ((hostname.match(/-/g) || []).length >= 4) {
+                add('Hostname contains many hyphens', 10, 'medium');
+            }
+
+            if (parsed.port && !['80', '443'].includes(parsed.port)) {
+                add('Uses a non-standard web port (' + parsed.port + ')', 8, 'caution');
+            }
+
+            const decodedForTerms = decodeURIComponent((parsed.pathname + ' ' + parsed.search).replace(/\+/g, ' ')).toLowerCase();
+            if (/\b(login|signin|verify|verification|password|account|secure|wallet|invoice|payment|mfa|2fa)\b/.test(decodedForTerms)) {
+                add('URL contains account, credential, or payment-related wording', 10, 'caution');
+            }
+
+            if ((parsed.href.match(/%[0-9a-f]{2}/gi) || []).length >= 5) {
+                add('URL contains heavy percent-encoding that can obscure its contents', 10, 'medium');
+            }
+
+            if (parsed.href.length > 220) {
+                add('URL is unusually long', 8, 'caution');
+            }
+
+            return {
+                parsed: parsed,
+                hostname: hostname,
+                domainHint: getRegistrableHint(hostname),
+                findings: findings,
+                score: Math.min(score, 100)
+            };
+        }
+
+        function extractEmailUrls(content) {
+            const matches = String(content).match(/https?:\/\/[^\s<>"'\)\]\}]+/gi) || [];
+            const cleaned = matches.map(url => url.replace(/[.,;:!?]+$/, ''));
+            return [...new Set(cleaned)].slice(0, 20);
+        }
+
+        function headerValue(content, name) {
+            const escaped = name.replace(/[.*+?^$\{\}()|[\]\\]/g, '\\$&');
+            const match = String(content).match(new RegExp('^' + escaped + ':\\s*(.+)$', 'im'));
+            return match ? match[1].trim() : '';
+        }
+
+        function emailDomain(value) {
+            const match = String(value || '').match(/@([a-z0-9.-]+\.[a-z]{2,})/i);
+            return match ? match[1].toLowerCase() : '';
+        }
+
+        function addPhishingIndicator(indicators, text, risk, detail) {
+            indicators.push({ text: text, risk: risk, detail: detail || '' });
+        }
+
         function analyzePhishing() {
-            const content = document.getElementById('emailContent').value.toLowerCase();
+            const original = document.getElementById('emailContent').value;
+            const content = original.toLowerCase();
             const results = document.getElementById('phishingResults');
-            
-            if (!content.trim()) {
-                results.innerHTML = '<div class="p-4 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400">Please enter email content to analyze</div>';
+
+            if (!original.trim()) {
+                results.innerHTML = '<div class="p-4 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400">Please enter email content to analyze.</div>';
                 return;
             }
-            
+
             const indicators = [];
             let riskScore = 0;
-            
-            // Check for suspicious patterns
-            const checks = [
-                { pattern: /urgent|immediate|action required|verify.*account|suspended|locked/i, text: 'Urgent/Threatening language', risk: 25 },
-                { pattern: /click.*here|verify.*now|update.*payment|confirm.*identity/i, text: 'Suspicious call-to-action', risk: 20 },
-                { pattern: /password|credit card|ssn|social security|bank account/i, text: 'Requests sensitive information', risk: 30 },
-                { pattern: /http:\/\/(?!www\.)|https?:\/\/\d+\.|bit\.ly|tinyurl|short\.link/i, text: 'Suspicious URLs', risk: 25 },
-                { pattern: /dear customer|dear user|valued customer/i, text: 'Generic greeting', risk: 10 },
-                { pattern: /won|lottery|prize|million dollars|inheritance/i, text: 'Too good to be true offers', risk: 35 },
-                { pattern: /from:.*@(?!.*\.(com|org|net|edu|gov))/i, text: 'Unusual sender domain', risk: 20 },
+
+            const from = headerValue(original, 'From');
+            const replyTo = headerValue(original, 'Reply-To');
+            const returnPath = headerValue(original, 'Return-Path');
+            const fromDomain = emailDomain(from);
+            const replyDomain = emailDomain(replyTo);
+            const returnDomain = emailDomain(returnPath);
+
+            if (fromDomain && replyDomain && fromDomain !== replyDomain) {
+                addPhishingIndicator(indicators, 'From and Reply-To domains do not match', 22, fromDomain + ' → ' + replyDomain);
+            }
+
+            if (fromDomain && returnDomain && fromDomain !== returnDomain) {
+                addPhishingIndicator(indicators, 'From and Return-Path domains differ', 8, fromDomain + ' → ' + returnDomain);
+            }
+
+            if (/\bspf=(fail|softfail)\b/i.test(original)) {
+                addPhishingIndicator(indicators, 'SPF authentication failed', 25);
+            }
+            if (/\bdkim=fail\b/i.test(original)) {
+                addPhishingIndicator(indicators, 'DKIM authentication failed', 28);
+            }
+            if (/\bdmarc=fail\b/i.test(original)) {
+                addPhishingIndicator(indicators, 'DMARC authentication failed', 32);
+            }
+
+            const textChecks = [
+                { pattern: /\b(urgent|immediately|action required|account (?:is )?(?:suspended|locked)|final warning)\b/i, text: 'Urgent or threatening language', risk: 15 },
+                { pattern: /\b(click here|verify now|confirm your identity|update payment|sign in now|validate your account)\b/i, text: 'Pressure to click or verify immediately', risk: 16 },
+                { pattern: /\b(password|social security|ssn|credit card|bank account|routing number|seed phrase|recovery phrase)\b/i, text: 'Requests or references sensitive information', risk: 18 },
+                { pattern: /\b(won|lottery|prize|inheritance|million dollars|gift card)\b/i, text: 'Prize, payment, or too-good-to-be-true language', risk: 20 },
+                { pattern: /\b(dear customer|dear user|valued customer)\b/i, text: 'Generic greeting', risk: 5 }
             ];
-            
-            checks.forEach(check => {
+
+            textChecks.forEach(check => {
                 if (check.pattern.test(content)) {
-                    indicators.push({ text: check.text, risk: check.risk });
-                    riskScore += check.risk;
+                    addPhishingIndicator(indicators, check.text, check.risk);
                 }
             });
-            
-            // Cap risk score at 100
-            riskScore = Math.min(riskScore, 100);
-            
-            let html = '';
-            if (riskScore === 0) {
-                html = `<div class="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
-                    <div class="flex items-center gap-3 mb-3">
-                        <i data-lucide="shield-check" class="w-8 h-8 text-green-400"></i>
-                        <div>
-                            <div class="text-green-400 font-bold text-lg">Low Risk</div>
-                            <div class="text-gray-400 text-sm">No obvious phishing indicators found</div>
-                        </div>
-                    </div>
-                    <div class="text-sm text-gray-400">Always verify sender identity and be cautious with unexpected emails.</div>
-                </div>`;
-            } else {
-                const color = riskScore > 70 ? 'red' : riskScore > 40 ? 'yellow' : 'orange';
-                const label = riskScore > 70 ? 'High Risk' : riskScore > 40 ? 'Medium Risk' : 'Low-Medium Risk';
-                
-                html = `<div class="p-4 rounded-lg bg-${color}-500/10 border border-${color}-500/20 mb-4">
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="flex items-center gap-3">
-                            <i data-lucide="shield-alert" class="w-8 h-8 text-${color}-400"></i>
-                            <div>
-                                <div class="text-${color}-400 font-bold text-lg">${label}</div>
-                                <div class="text-gray-400 text-sm">Risk Score: ${riskScore}/100</div>
-                            </div>
-                        </div>
-                        <div class="w-16 h-16 relative">
-                            <svg class="progress-ring w-16 h-16" viewBox="0 0 36 36">
-                                <path class="text-gray-700" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3"/>
-                                <path class="text-${color}-400" stroke-dasharray="${riskScore}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3"/>
-                            </svg>
-                        </div>
-                    </div>
-                </div>`;
-                
-                if (indicators.length > 0) {
-                    html += `<div class="space-y-2"><div class="text-sm text-gray-400 mb-2">Detected Indicators:</div>`;
-                    indicators.forEach(ind => {
-                        html += `<div class="flex items-center gap-3 p-3 rounded-lg bg-surface-light">
-                            <i data-lucide="alert-circle" class="w-5 h-5 text-${color}-400"></i>
-                            <span class="text-gray-300">${ind.text}</span>
-                            <span class="ml-auto text-sm text-${color}-400">+${ind.risk}</span>
-                        </div>`;
-                    });
-                    html += '</div>';
-                }
+
+            lastPhishingUrls = extractEmailUrls(original);
+            let suspiciousUrlCount = 0;
+            let worstUrlScore = 0;
+
+            lastPhishingUrls.forEach(url => {
+                try {
+                    const local = inspectUrlLocally(url);
+                    if (local.score > 0) suspiciousUrlCount++;
+                    worstUrlScore = Math.max(worstUrlScore, local.score);
+                } catch (e) {}
+            });
+
+            if (suspiciousUrlCount > 0) {
+                const urlRisk = Math.min(28, Math.max(8, Math.round(worstUrlScore * 0.65)));
+                addPhishingIndicator(
+                    indicators,
+                    suspiciousUrlCount + ' link' + (suspiciousUrlCount === 1 ? '' : 's') + ' contain suspicious URL characteristics',
+                    urlRisk,
+                    lastPhishingUrls.length + ' URL' + (lastPhishingUrls.length === 1 ? '' : 's') + ' extracted'
+                );
             }
-            
+
+            indicators.forEach(indicator => riskScore += indicator.risk);
+            riskScore = Math.min(riskScore, 100);
+
+            let label = 'No obvious indicators';
+            let color = 'green';
+            let summary = 'No common phishing indicators were detected in the text provided.';
+
+            if (riskScore >= 70) {
+                label = 'High phishing risk';
+                color = 'red';
+                summary = 'Multiple strong phishing indicators were detected.';
+            } else if (riskScore >= 40) {
+                label = 'Suspicious';
+                color = 'orange';
+                summary = 'Several characteristics deserve verification before you trust this message.';
+            } else if (riskScore >= 20) {
+                label = 'Use caution';
+                color = 'yellow';
+                summary = 'Some potentially suspicious characteristics were detected.';
+            }
+
+            let html =
+                '<div class="p-4 rounded-lg bg-' + color + '-500/10 border border-' + color + '-500/20">' +
+                    '<div class="flex items-start gap-3">' +
+                        '<i data-lucide="' + (riskScore >= 40 ? 'shield-alert' : 'shield-check') + '" class="w-8 h-8 text-' + color + '-400 flex-shrink-0"></i>' +
+                        '<div>' +
+                            '<div class="text-' + color + '-400 font-bold text-lg">' + label + '</div>' +
+                            '<div class="text-gray-300 text-sm mt-1">' + summary + '</div>' +
+                            '<div class="text-gray-500 text-xs mt-2">Heuristic score: ' + riskScore + '/100 — this is not a definitive verdict.</div>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>';
+
+            if (indicators.length) {
+                html += '<div class="mt-4 space-y-2"><div class="text-sm text-gray-400 mb-2">Detected indicators</div>';
+                indicators
+                    .sort((a, b) => b.risk - a.risk)
+                    .forEach(ind => {
+                        html +=
+                            '<div class="p-3 rounded-lg bg-surface-light">' +
+                                '<div class="flex items-start gap-3">' +
+                                    '<i data-lucide="triangle-alert" class="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0"></i>' +
+                                    '<div class="min-w-0">' +
+                                        '<div class="text-gray-300 text-sm">' + escapeToolkitHtml(ind.text) + '</div>' +
+                                        (ind.detail ? '<div class="text-gray-500 text-xs mt-1 break-all">' + escapeToolkitHtml(ind.detail) + '</div>' : '') +
+                                    '</div>' +
+                                    '<span class="ml-auto text-xs text-gray-500">+' + ind.risk + '</span>' +
+                                '</div>' +
+                            '</div>';
+                    });
+                html += '</div>';
+            }
+
+            if (lastPhishingUrls.length) {
+                html +=
+                    '<div class="mt-4 p-4 rounded-lg border border-cyan-500/20 bg-cyan-500/5">' +
+                        '<div class="flex items-center justify-between gap-3">' +
+                            '<div>' +
+                                '<div class="text-cyan-300 font-medium">Links found: ' + lastPhishingUrls.length + '</div>' +
+                                '<div class="text-gray-500 text-xs mt-1">Use the URL Checker for structural and Google Web Risk checks.</div>' +
+                            '</div>' +
+                            '<button onclick="openFirstPhishingUrl()" class="px-3 py-2 rounded-lg bg-cyan-500/15 text-cyan-300 hover:bg-cyan-500/25 text-sm whitespace-nowrap">Check first link</button>' +
+                        '</div>' +
+                    '</div>';
+            }
+
             results.innerHTML = html;
             lucide.createIcons();
+        }
+
+        function openFirstPhishingUrl() {
+            if (!lastPhishingUrls.length) return;
+            document.getElementById('urlCheckInput').value = lastPhishingUrls[0];
+            showTool('urlchecker');
+            setTimeout(checkUrlSafety, 50);
+        }
+
+        function threatLabel(type) {
+            const labels = {
+                MALWARE: 'Malware',
+                SOCIAL_ENGINEERING: 'Phishing / social engineering',
+                UNWANTED_SOFTWARE: 'Unwanted software'
+            };
+            return labels[type] || String(type).replace(/_/g, ' ');
+        }
+
+        async function checkUrlSafety() {
+            const input = document.getElementById('urlCheckInput');
+            const results = document.getElementById('urlCheckResults');
+            const button = document.getElementById('urlCheckBtn');
+
+            let local;
+            try {
+                local = inspectUrlLocally(input.value);
+                input.value = local.parsed.href;
+            } catch (error) {
+                results.innerHTML =
+                    '<div class="p-4 rounded-lg bg-red-500/10 border border-red-500/20 text-red-300">' +
+                    escapeToolkitHtml(error.message || 'Invalid URL') +
+                    '</div>';
+                return;
+            }
+
+            button.disabled = true;
+            button.classList.add('opacity-60', 'cursor-wait');
+
+            let liveStatus = 'checking';
+            let liveThreats = [];
+            let liveMessage = '';
+
+            try {
+                const response = await fetch('/api/url-check', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    cache: 'no-store',
+                    body: JSON.stringify({ url: local.parsed.href })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Web Risk endpoint is not available');
+                }
+
+                const data = await response.json();
+                liveThreats = Array.isArray(data.threatTypes) ? data.threatTypes : [];
+                liveStatus = liveThreats.length ? 'threat' : 'clear';
+            } catch (error) {
+                liveStatus = 'offline';
+                liveMessage = 'Live Google Web Risk lookup is not connected yet; the local URL checks below still ran.';
+            } finally {
+                button.disabled = false;
+                button.classList.remove('opacity-60', 'cursor-wait');
+            }
+
+            let html = '';
+
+            if (liveStatus === 'threat') {
+                html +=
+                    '<div class="p-5 rounded-xl bg-red-500/10 border border-red-500/30">' +
+                        '<div class="flex items-start gap-3">' +
+                            '<i data-lucide="shield-x" class="w-9 h-9 text-red-400 flex-shrink-0"></i>' +
+                            '<div>' +
+                                '<div class="text-red-400 font-bold text-xl">Google Web Risk match</div>' +
+                                '<div class="text-gray-300 mt-1">This URL matched: ' +
+                                    liveThreats.map(t => escapeToolkitHtml(threatLabel(t))).join(', ') +
+                                '.</div>' +
+                                '<div class="text-gray-500 text-xs mt-2">Do not open the link unless you have a specific security-analysis reason to do so.</div>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>';
+            } else if (liveStatus === 'clear') {
+                html +=
+                    '<div class="p-5 rounded-xl bg-green-500/10 border border-green-500/25">' +
+                        '<div class="flex items-start gap-3">' +
+                            '<i data-lucide="shield-check" class="w-9 h-9 text-green-400 flex-shrink-0"></i>' +
+                            '<div>' +
+                                '<div class="text-green-400 font-bold text-xl">No Google Web Risk match found</div>' +
+                                '<div class="text-gray-300 mt-1">Google Web Risk did not return a known malware, phishing/social-engineering, or unwanted-software match for this URL.</div>' +
+                                '<div class="text-gray-500 text-xs mt-2">This does not guarantee the site is safe.</div>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>';
+            } else {
+                html +=
+                    '<div class="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">' +
+                        '<div class="flex items-start gap-3">' +
+                            '<i data-lucide="cloud-off" class="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5"></i>' +
+                            '<div class="text-sm text-gray-300">' + escapeToolkitHtml(liveMessage) + '</div>' +
+                        '</div>' +
+                    '</div>';
+            }
+
+            html +=
+                '<div class="mt-4 p-4 rounded-xl bg-surface-light">' +
+                    '<div class="text-sm text-gray-500 mb-1">Parsed destination</div>' +
+                    '<div class="text-white font-mono break-all">' + escapeToolkitHtml(local.parsed.href) + '</div>' +
+                    '<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4 text-sm">' +
+                        '<div><span class="text-gray-500">Hostname:</span> <span class="text-gray-300 font-mono break-all">' + escapeToolkitHtml(local.hostname) + '</span></div>' +
+                        '<div><span class="text-gray-500">Protocol:</span> <span class="text-gray-300">' + escapeToolkitHtml(local.parsed.protocol.replace(':','').toUpperCase()) + '</span></div>' +
+                    '</div>' +
+                '</div>';
+
+            if (local.findings.length) {
+                html += '<div class="mt-4"><div class="text-sm text-gray-400 mb-2">Local URL indicators</div><div class="space-y-2">';
+                local.findings.forEach(item => {
+                    html +=
+                        '<div class="flex items-start gap-3 p-3 rounded-lg bg-surface-light">' +
+                            '<i data-lucide="triangle-alert" class="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0"></i>' +
+                            '<span class="text-gray-300 text-sm">' + escapeToolkitHtml(item.text) + '</span>' +
+                        '</div>';
+                });
+                html += '</div></div>';
+            } else {
+                html +=
+                    '<div class="mt-4 p-3 rounded-lg bg-surface-light text-sm text-gray-400">' +
+                        '<span class="text-green-400">No obvious structural red flags</span> were detected in the URL text itself.' +
+                    '</div>';
+            }
+
+            results.innerHTML = html;
+            lucide.createIcons();
+        }
+
+        const urlCheckInput = document.getElementById('urlCheckInput');
+        if (urlCheckInput) {
+            urlCheckInput.addEventListener('keydown', event => {
+                if (event.key === 'Enter') checkUrlSafety();
+            });
         }
 
         // ==================== IP LOOKUP ====================
