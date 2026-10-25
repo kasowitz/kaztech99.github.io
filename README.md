@@ -30,6 +30,9 @@ Build an enjoyable, realistic-looking and increasingly physically accurate **2D*
 
 **Verification distinction:** The above is what code attempts to implement; it has **not yet been fully tested in a real browser**, so do not claim every control works until actual tests pass. Record any confirmed issues below.
 
+## Fix log
+- **2026-10-25:** Initial live test reported “Could not load physics libraries.” The Rapier import URL incorrectly omitted the required `/dist/` path. Corrected to `https://cdn.jsdelivr.net/npm/@dimforge/rapier2d-compat@0.21.0/dist/rapier.mjs` based on Rapier's published 0.21.0 package file list. JavaScript parsed after the change. **Browser execution remains unverified until retested on the live page.**
+
 ## Known constraints
 - CDN imports require an internet connection and third-party availability.
 - First-load cost includes Rapier's WASM initialization.
