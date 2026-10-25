@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Physics Playground · KazTech</title>
+<style>
+:root{font:14px/1.45 system-ui,Segoe UI,Arial,sans-serif;color-scheme:dark;--bg:#0d1626;--panel:#162238;--edge:#354763;--muted:#a0b3cf;--accent:#86efdb}*{box-sizing:border-box}html,body{margin:0;height:100%;overflow:hidden;background:var(--bg);color:#edf6ff}body{display:flex;flex-direction:column}header{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 20px;background:#111d30;border-bottom:1px solid var(--edge)}h1{font-size:1.2rem;margin:0}small{color:var(--muted)}.badge{border:1px solid #477369;background:#1a4044;border-radius:25px;color:var(--accent);padding:4px 10px;font-size:.78rem;white-space:nowrap}.layout{flex:1;min-height:0;display:flex}aside{width:255px;flex:none;background:var(--panel);border-right:1px solid var(--edge);padding:15px;overflow:auto}h2{font-size:.73rem;text-transform:uppercase;letter-spacing:.1em;color:#a9bdd8;margin:0 0 10px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px}button{font:inherit;font-weight:600;min-height:40px;padding:9px 6px;background:#263950;color:#f0f8ff;border:1px solid #48617a;border-radius:8px;cursor:pointer}button:hover{background:#355272}button:focus-visible{outline:3px solid #8ff3df;outline-offset:2px}button[aria-pressed=true]{background:#176166;border-color:var(--accent)}#clear{grid-column:span 2;border-color:#88515c;color:#ffced2}.field{margin-bottom:14px}.field label{display:flex;justify-content:space-between;gap:5px;margin-bottom:6px}output{color:var(--accent);font-variant-numeric:tabular-nums}input[type=range]{width:100%;accent-color:var(--accent)}.hint{font-size:.82rem;color:var(--muted);border-top:1px solid var(--edge);padding-top:13px;line-height:1.8}.hint b{color:#f1f7ff}#stage{position:relative;flex:1;min-width:0;min-height:210px;overflow:hidden;touch-action:none;background:radial-gradient(circle at 60% 5%,#274057,#132036 55%,#0d1626)}#stage:before{content:"";position:absolute;inset:0;opacity:.22;pointer-events:none;background-image:linear-gradient(#7898b42b 1px,transparent 1px),linear-gradient(90deg,#7898b42b 1px,transparent 1px);background-size:32px 32px}#stage canvas{position:absolute;inset:0;display:block;touch-action:none;cursor:crosshair}#stage[data-tool=grab] canvas{cursor:grab}#stage[data-tool=erase] canvas{cursor:not-allowed}#stage.dragging canvas{cursor:grabbing}.hud,.stats{position:absolute;top:14px;padding:9px 12px;border:1px solid #3a5670;border-radius:10px;background:#102038d9;pointer-events:none}.hud{left:14px}.hud b{color:#98efdb}.hud div{font-size:.78rem;color:var(--muted)}.stats{right:14px;font-size:.78rem;font-variant-numeric:tabular-nums}#notice{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);max-width:85%;min-width:230px;padding:10px;border-radius:9px;text-align:center;border:1px solid #506a85;background:#18314ce8}#notice:empty{display:none}footer{background:#111d30;color:var(--muted);font-size:.75rem;padding:8px 16px;border-top:1px solid var(--edge)}@media(max-width:700px){.layout{flex-direction:column-reverse}aside{width:100%;max-height:40vh;border-right:0;border-top:1px solid var(--edge);padding:10px}.grid{grid-template-columns:repeat(4,1fr);gap:5px}.grid button{font-size:.76rem;padding:7px 2px}.field{display:inline-block;width:31%;margin-right:1%;vertical-align:top}.hint{display:none}.hud,.stats{top:8px}.stats{right:8px;font-size:.7rem}.hud{left:8px}}
+</style></head>
+<body>
+<header><div><h1>⚛ Physics Playground</h1><small>KazTech Labs · Drag, drop, throw, explore</small></div><span class="badge">Prototype v0.1</span></header>
+<div class="layout"><aside><h2>Objects & tools</h2><div class="grid">
+<button data-tool="ball" aria-pressed="true">● Ball</button><button data-tool="box" aria-pressed="false">■ Box</button><button data-tool="ramp" aria-pressed="false">▰ Ramp</button><button data-tool="grab" aria-pressed="false">✋ Grab</button><button data-tool="erase" aria-pressed="false">⌫ Erase</button><button id="rain">☄ Ball rain</button><button id="pause">Ⅱ Pause</button><button id="reset">↻ Reset</button><button id="clear">Clear objects</button></div>
+<h2>Physical properties</h2><div class="field"><label for="gravity">Gravity <output id="gOut">9.8 m/s²</output></label><input id="gravity" type="range" min="0" max="25" step=".1" value="9.8"></div>
+<div class="field"><label for="bounce">Bounciness <output id="bOut">45%</output></label><input id="bounce" type="range" min="0" max="100" value="45"></div>
+<div class="field"><label for="friction">Friction <output id="fOut">60%</output></label><input id="friction" type="range" min="0" max="100" value="60"></div>
+<div class="hint"><b>Click</b> empty space to create the selected shape.<br><b>Drag</b> balls or boxes to throw them.<br><b>Grab</b> moves objects without creating new ones.<br><b>Erase</b> removes objects.<br><b>Space</b> pauses or resumes.<br><br>Coming later: sand, water, joints, chains, and more.</div></aside>
+<main id="stage" data-tool="ball" aria-label="Physics simulation canvas"><div class="hud"><b id="instruction">Click to create a ball</b><div>Pick things up and throw them around!</div></div><div class="stats"><span id="count">0</span> objects · <span id="fps">—</span> FPS</div><div id="notice" role="status">Loading physics libraries…</div></main></div>
+<footer>A standalone page · Rapier 2D physics · PixiJS rendering · Existing website remains separate</footer>
+<script type="module">
+(async()=>{
+"use strict";
+const $=id=>document.getElementById(id),stage=$("stage"),notice=$("notice"),g=$("gravity"),b=$("bounce"),f=$("friction");
+const S=50,DT=1/60,LIMIT=200,colors=[0x83e3ce,0xf6bd73,0x95bdfa,0xe99cbe,0xbaa7f5,0xa9d983];
+const meter=n=>n/S,pixel=n=>n*S,clamp=(v,a,z)=>Math.max(a,Math.min(v,z));
+let R,P,app,world,w=600,h=400,objects=[],walls=[],tool="ball",held=null,mouse={x:0,y:0},paused=false,carry=0;
+const flash=s=>{notice.textContent=s;clearTimeout(flash.id);flash.id=setTimeout(()=>{if(notice.textContent===s)notice.textContent="";},2500);};
+try{
+ const modules=await Promise.all([import("https://cdn.jsdelivr.net/npm/@dimforge/rapier2d-compat@0.21.0/rapier.mjs"),import("https://cdn.jsdelivr.net/npm/pixi.js@8.22.0/dist/pixi.min.mjs")]);
+ R=modules[0].default||modules[0];P=modules[1];
+ await R.init();
+ app=new P.Application();
+ await app.init({resizeTo:stage,backgroundAlpha:0,antialias:true,resolution:Math.min(devicePixelRatio||1,2),autoDensity:true,preference:"webgl"});
+ stage.appendChild(app.canvas);
+ w=stage.clientWidth;h=stage.clientHeight;world=new R.World({x:0,y:9.8});world.timestep=DT;
+}catch(error){console.error(error);notice.textContent="Could not load physics libraries. Refresh while online.";notice.style.color="#ffd0d0";return;}
+function rebuildWalls(){
+ for(const body of walls)world.removeRigidBody(body);walls=[];
+ function wall(x,y,hx,hy){const body=world.createRigidBody(R.RigidBodyDesc.fixed().setTranslation(x,y));world.createCollider(R.ColliderDesc.cuboid(hx,hy).setRestitution(.25).setFriction(.8),body);walls.push(body);}
+ const ww=meter(w),hh=meter(h);wall(ww/2,hh+.24,ww/2+.6,.29);wall(-.24,hh/2,.3,hh/2+.8);wall(ww+.24,hh/2,.3,hh/2+.8);wall(ww/2,-.5,ww/2+.6,.3);
+}
+function renderOne(s){const t=s.body.translation();s.gfx.position.set(pixel(t.x),pixel(t.y));s.gfx.rotation=s.body.rotation();}
+function updateCount(){$("count").textContent=String(objects.length);}
+function spawn(type,x,y){
+ if(objects.length>=LIMIT){flash("Maximum objects reached. Clear some first.");return null;}
+ const radius=15+Math.random()*12,sx=type==="ramp"?125:type==="box"?43:radius*2,sy=type==="ramp"?15:type==="box"?43:radius*2;
+ x=clamp(x,20,Math.max(20,w-25));y=clamp(y,25,Math.max(25,h-40));
+ const rigid=(type==="ramp"?R.RigidBodyDesc.fixed():R.RigidBodyDesc.dynamic().setLinearDamping(.1).setAngularDamping(.13)).setTranslation(meter(x),meter(y)).setRotation(type==="ramp"?-.3:0);
+ const body=world.createRigidBody(rigid);
+ const desc=type==="ball"?R.ColliderDesc.ball(meter(radius)):R.ColliderDesc.cuboid(meter(sx/2),meter(sy/2));
+ desc.setDensity(1.1).setFriction(Number(f.value)/100).setRestitution(Number(b.value)/100);
+ const collider=world.createCollider(desc,body),gfx=new P.Graphics(),color=colors[Math.floor(Math.random()*colors.length)];
+ if(type==="ball"){gfx.circle(0,0,radius).fill(color).stroke({width:2,color:0xffffff,alpha:.4});gfx.circle(-radius*.26,-radius*.26,radius*.2).fill({color:0xffffff,alpha:.3});}
+ else gfx.roundRect(-sx/2,-sy/2,sx,sy,type==="ramp"?3:6).fill(type==="ramp"?0x7294b8:color).stroke({width:2,color:0xffffff,alpha:.35});
+ app.stage.addChild(gfx);
+ const shape={type,radius,sx,sy,body,collider,gfx};objects.push(shape);renderOne(shape);updateCount();return shape;
+}
+function remove(s){
+ if(!s)return;
+ if(held===s)release();
+ const i=objects.indexOf(s);if(i<0)return;objects.splice(i,1);
+ app.stage.removeChild(s.gfx);s.gfx.destroy();world.removeRigidBody(s.body);updateCount();
+}
+function clear(){for(const s of [...objects])remove(s);}
+function reset(){clear();spawn("ramp",w*.72,h*.67);spawn("box",w*.43,h*.20);spawn("ball",w*.25,h*.12);spawn("ball",w*.56,h*.10);}
+function find(x,y){
+ for(let i=objects.length-1;i>=0;i--){
+  const s=objects[i],t=s.body.translation(),dx=x-pixel(t.x),dy=y-pixel(t.y),a=-s.body.rotation();
+  const xx=dx*Math.cos(a)-dy*Math.sin(a),yy=dx*Math.sin(a)+dy*Math.cos(a);
+  if(s.type==="ball"?Math.hypot(xx,yy)<=s.radius+7:Math.abs(xx)<=s.sx/2+6&&Math.abs(yy)<=s.sy/2+6)return s;
+ }
+ return null;
+}
+function select(value){
+ tool=value;stage.dataset.tool=value;
+ $("instruction").textContent=({ball:"Click to create a ball",box:"Click to create a box",ramp:"Click to add a ramp",grab:"Drag objects to throw them",erase:"Click objects to erase them"})[value];
+ document.querySelectorAll("button[data-tool]").forEach(btn=>btn.setAttribute("aria-pressed",String(btn.dataset.tool===value)));
+}
+function location(e){const r=app.canvas.getBoundingClientRect();return{x:(e.clientX-r.left)*w/r.width,y:(e.clientY-r.top)*h/r.height};}
+function release(){held=null;stage.classList.remove("dragging");}
+app.canvas.addEventListener("pointerdown",e=>{
+ if(e.pointerType==="mouse"&&e.button!==0)return;
+ mouse=location(e);const s=find(mouse.x,mouse.y);
+ if(tool==="erase"){if(s)remove(s);return;}
+ if(s&&s.type!=="ramp"){held=s;stage.classList.add("dragging");s.body.wakeUp();app.canvas.setPointerCapture(e.pointerId);return;}
+ if(tool!=="grab")spawn(tool,mouse.x,mouse.y);
+});
+app.canvas.addEventListener("pointermove",e=>{mouse=location(e);});
+app.canvas.addEventListener("pointerup",release);app.canvas.addEventListener("pointercancel",release);window.addEventListener("blur",release);
+document.querySelectorAll("button[data-tool]").forEach(btn=>btn.addEventListener("click",()=>select(btn.dataset.tool)));
+$("rain").addEventListener("click",()=>{for(let i=0;i<12&&objects.length<LIMIT;i++)spawn("ball",30+Math.random()*Math.max(1,w-60),30+Math.random()*100);});
+$("clear").addEventListener("click",()=>{clear();flash("Scene cleared");});
+$("reset").addEventListener("click",()=>{reset();flash("Scene reset");});
+$("pause").addEventListener("click",()=>{paused=!paused;$("pause").textContent=paused?"▶ Resume":"Ⅱ Pause";$("pause").setAttribute("aria-pressed",String(paused));flash(paused?"Paused":"Playing");});
+g.addEventListener("input",()=>{world.gravity={x:0,y:Number(g.value)};$("gOut").textContent=Number(g.value).toFixed(1)+" m/s²";for(const s of objects)if(s.type!=="ramp")s.body.wakeUp();});
+function materials(){
+ $("bOut").textContent=b.value+"%";$("fOut").textContent=f.value+"%";
+ for(const s of objects){s.collider.setRestitution(Number(b.value)/100);s.collider.setFriction(Number(f.value)/100);if(s.type!=="ramp")s.body.wakeUp();}
+}
+b.addEventListener("input",materials);f.addEventListener("input",materials);
+window.addEventListener("keydown",e=>{if(e.code==="Space"&&!["BUTTON","INPUT","TEXTAREA"].includes(document.activeElement?.tagName||"")){e.preventDefault();$("pause").click();}});
+new ResizeObserver(()=>{const nw=stage.clientWidth,nh=stage.clientHeight;if(nw>0&&nh>0&&(Math.abs(nw-w)>2||Math.abs(nh-h)>2)){w=nw;h=nh;rebuildWalls();}}).observe(stage);
+rebuildWalls();reset();select("ball");notice.textContent="";
+app.ticker.add(t=>{
+ if(!paused){
+  carry=Math.min(.1,carry+t.deltaMS/1000);let ticks=0;
+  while(carry>=DT&&ticks++<6){
+   if(held){
+    const body=held.body,pos=body.translation(),vel=body.linvel(),mass=body.mass();
+    const fx=((meter(mouse.x)-pos.x)*95-vel.x*18)*mass,fy=((meter(mouse.y)-pos.y)*95-vel.y*18)*mass;
+    body.addForce({x:clamp(fx,-700,700),y:clamp(fy,-700,700)},true);
+    body.setAngvel(body.angvel()*.9,true);
+   }
+   world.step();carry-=DT;
+  }
+ }else carry=0;
+ for(const s of objects)renderOne(s);
+ $("fps").textContent=String(Math.round(app.ticker.FPS||0));
+});
+})().catch(e=>{console.error(e);document.getElementById("notice").textContent="Unexpected error. Try reloading.";});
+</script></body></html>
