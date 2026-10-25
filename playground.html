@@ -22,7 +22,7 @@ const meter=n=>n/S,pixel=n=>n*S,clamp=(v,a,z)=>Math.max(a,Math.min(v,z));
 let R,P,app,world,w=600,h=400,objects=[],walls=[],tool="ball",held=null,mouse={x:0,y:0},paused=false,carry=0;
 const flash=s=>{notice.textContent=s;clearTimeout(flash.id);flash.id=setTimeout(()=>{if(notice.textContent===s)notice.textContent="";},2500);};
 try{
- const modules=await Promise.all([import("https://cdn.jsdelivr.net/npm/@dimforge/rapier2d-compat@0.21.0/rapier.mjs"),import("https://cdn.jsdelivr.net/npm/pixi.js@8.22.0/dist/pixi.min.mjs")]);
+ const modules=await Promise.all([import("https://cdn.jsdelivr.net/npm/@dimforge/rapier2d-compat@0.21.0/dist/rapier.mjs"),import("https://cdn.jsdelivr.net/npm/pixi.js@8.22.0/dist/pixi.min.mjs")]);
  R=modules[0].default||modules[0];P=modules[1];
  await R.init();
  app=new P.Application();
